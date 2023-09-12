@@ -1467,10 +1467,10 @@ if st.button("Submit"):
 
 
 # # Allow the user to clear all stored conversation sessions
-if st.button("Reset Session"):
-    reset_session_state()
-    # st.cache_data.clear()
-    # pdf_files.clear()
+# if st.button("Reset Session"):
+#     reset_session_state()
+#     # st.cache_data.clear()
+#     # pdf_files.clear()
 
 
 
