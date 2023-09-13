@@ -1596,7 +1596,7 @@ elif selected_option_case_type == "AML":
         for fetched_pdf in fetched_files:
             file_ext = tuple("pdf")
             if fetched_pdf.endswith(file_ext):
-                file_pth = os.path.join('/', fetched_pdf)
+                file_pth = os.path.join('ml_doc/', fetched_pdf)
                 # st.write(file_pth)
                 temp_file_path.append(file_pth) 
             else:
