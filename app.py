@@ -1696,16 +1696,16 @@ elif selected_option_case_type == "AML":
                     whether this is a money laundering case\
                     "
                     contexts = docsearch.similarity_search(queries, k=5) 
-                    prompts = f" Give a the answer to the below questions as truthfully and in as detailed in the form of sentences\
+                    prompts = f''' Give a the answer to the below questions as truthfully and in as detailed in the form of sentences\
                     as possible as per given context only,\n\n\
                          Is there any potential Money Laundering activity based on the transaction statements \n\
                           What are the transaction that can be associated with Money Laundering activity?\n\
                           When is the Money laundering activity taking place?\n\
                           What type of Money laundering activity is taking place?\n\
-                          What is the total amount associated with the money laundering activity?\n\  
+                          What is the total amount associated with the money laundering activity? \n\  
                         Context: {contexts}\n\
                         Response (in the python dictionary format\
-                        where the dictionary key would carry the questions and its value would have a descriptive answer to the questions asked): "
+                        where the dictionary key would carry the questions and its value would have a descriptive answer to the questions asked): '''
                         
                     response = usellm(prompts)
                     
