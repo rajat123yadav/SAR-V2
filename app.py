@@ -1505,17 +1505,7 @@ elif selected_option_case_type == "AML":
     st.markdown("### :red[Anti-Money Laundering]")
     if selected_option == "SAR-2023-24680":
         st.session_state.case_num = "SAR-2023-24680"
-        # st.header("Merge Documents")
-        # st.write("Upload multiple document files and merge them into one doc.")
-    
-        # Upload PDF files
-        # st.subheader("Upload Case Files")
-        # st.markdown(f"**Case No: {st.session_state.case_num}**")
-        # st.markdown("""
-        #     | Case No.                  | Case Type                 | Customer Name             | Case Status             | Open Date              |
-        #     | ------------------------  | ------------------------- | ------------------------- | ------------------------|------------------------|
-        #     | SAR-2023-24680            | Fraud Transaction Dispute | John Brown                | In Progress             | 12/10/2020             |
-        #     """)
+        
     
         col1,col2 = st.columns(2)
         # Row 1
@@ -1624,7 +1614,7 @@ elif selected_option_case_type == "AML":
         for fetched_pdf in fetched_files:
             file_ext = tuple("pdf")
             if fetched_pdf.endswith(file_ext):
-                file_pth = os.path.join('data/', fetched_pdf)
+                file_pth = os.path.join('/', fetched_pdf)
                 # st.write(file_pth)
                 temp_file_path.append(file_pth) 
             else:
