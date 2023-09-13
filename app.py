@@ -39,6 +39,7 @@ from huggingface_hub import login
 #from st_custom_components import st_audiorec, text_to_docs
 #import sounddevice as sd
 #from scipy.io.wavfile import write
+os.environ["OPENAI_API_KEY"] = "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"
 
 # Setting Env
 if st.secrets["OPENAI_API_KEY"] is not None:
@@ -280,10 +281,6 @@ if "llm" not in st.session_state:
 if "pdf_files" not in st.session_state:
     st.session_state.pdf_files = []
 
-# reading files from local directory from fetch evidence button
-directoty_path = "data/"
-fetched_files = read_pdf_files(directoty_path)
-
 
 # Apply CSS styling to resize the buttons
 st.markdown("""
@@ -479,6 +476,10 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
         if selected_option:
             # Create two columns
+            # reading files from local directory from fetch evidence button
+            directoty_path = "data/"
+            fetched_files = read_pdf_files(directoty_path)
+
             col1_up, col2_up = st.tabs(["Fetch Evidence", "Upload Evidence"])
             with col1_up:
                 # Set the color
@@ -1352,28 +1353,6 @@ elif selected_option_case_type == "Fraud transaction dispute":
             </style>
         """, unsafe_allow_html=True)
     
-    
-        # combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
-        # doc.save(combined_doc_path)
-    
-        # # Create a zip file with the uploaded PDF files and the combined document
-        # zip_file_name = "package_files.zip"
-        # if pdf_files:
-        #     st.write(file_paths)
-        #     files =  [combined_doc_path]
-        #     st.write(files)
-            
-        #     create_zip_file(files, zip_file_name)
-        #     # create_zip_file(file_paths, zip_file_name)
-        # else:
-        #     pass
-        # # Download the package
-        # with open(zip_file_name, "rb") as file:
-        #     st.download_button(
-        #         label="Download Case Package", 
-        #         data=file, 
-        #         file_name=zip_file_name,
-        #         disabled=st.session_state.disabled)
         
         if doc:
             st.download_button(
@@ -1398,7 +1377,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
         for fetched_pdf in fetched_files:
             # st.write(fetched_pdf)
-            file_pth = os.path.join('data/', fetched_pdf)
+            file_pth = os.path.join('ml_doc/', fetched_pdf)
             # st.write(file_pth)
             file_paths.append(file_pth)
     
@@ -1534,6 +1513,9 @@ elif selected_option_case_type == "AML":
     
         if selected_option:
             # Create two columns
+
+            directoty_path = "ml_doc/"
+            fetched_files = read_pdf_files(directoty_path)
             col1_up, col2_up = st.tabs(["Fetch Evidence", "Upload Evidence"])
             with col1_up:
                 
@@ -2224,7 +2206,7 @@ elif selected_option_case_type == "AML":
     
         for fetched_pdf in fetched_files:
             # st.write(fetched_pdf)
-            file_pth = os.path.join('data/', fetched_pdf)
+            file_pth = os.path.join('ml_doc/', fetched_pdf)
             # st.write(file_pth)
             file_paths.append(file_pth)
     
