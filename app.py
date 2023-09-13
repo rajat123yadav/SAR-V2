@@ -622,9 +622,9 @@ if selected_option == "SAR-2023-24680":
     # model_name = "hkunlp/instructor-large"
     
     # Memory setup for gpt-3.5
-    llm = ChatOpenAI(temperature=0.1)
-    memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=500)
-    conversation = ConversationChain(llm=llm, memory =memory,verbose=False)
+    # llm = ChatOpenAI(temperature=0.1)
+    # memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=500)
+    # conversation = ConversationChain(llm=llm, memory =memory,verbose=False)
     
     
     # Adding condition on embedding
