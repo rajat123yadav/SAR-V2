@@ -1747,11 +1747,17 @@ elif selected_option_case_type == "AML":
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
 
+                    response = llama_llm(llama_13b,prompt_1)
+                    chat_history[query] = response
+
                     query = "When is the Money laundering activity taking place?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give all the dates when a money laundering activity is taking place given the context, answer precisely\n\n\
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
+
+                    response = llama_llm(llama_13b,prompt_1)
+                    chat_history[query] = response
 
                     query = "What type of Money laundering activity is taking place?"
                     context_1 = docsearch.similarity_search(query, k=5)
@@ -1759,12 +1765,14 @@ elif selected_option_case_type == "AML":
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
 
+                    response = llama_llm(llama_13b,prompt_1)
+                    chat_history[query] = response
+
                     query = "What is the total amount associated with the money laundering activity?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the total amount associated with money laundering activity that is taking place Based on the transaction statement, answer precisely\n\n\
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
-
                     
                     response = llama_llm(llama_13b,prompt_1)
                     chat_history[query] = response
