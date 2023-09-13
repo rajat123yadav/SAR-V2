@@ -1701,7 +1701,7 @@ elif selected_option_case_type == "AML":
                          Is there any potential Money Laundering activity based on the transaction statements \n\
                           What are the transaction that can be associated with Money Laundering activity?\n\
                           When is the Money laundering activity taking place?\n\
-                         What type of Money laundering activity is taking place?\n\
+                          What type of Money laundering activity is taking place?\n\
                           What is the total amount associated with the money laundering activity?\n\  
                         Context: {contexts}\n\
                         Response (in the python dictionary format\
