@@ -1,0 +1,10 @@
+api_key ="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"
+
+hugging_face_key="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"
+
+from creds import api_key, hugging_face_key
+
+os.environ["OPENAI_API_KEY"] = api_key
+
+login(token=hugging_face_key)
+os.environ["HUGGINGFACEHUB_API_TOKEN"]=hugging_face_key
