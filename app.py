@@ -41,11 +41,13 @@ from huggingface_hub import login
 #from scipy.io.wavfile import write
                                 
 # Setting Env
-if st.secrets["OPENAI_API_KEY"] is not None:
-    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
-else:
-    os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY")
+# if st.secrets["OPENAI_API_KEY"] is not None:
+#     os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+# else:
+#     os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY")
 
+api_key ="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"
+os.environ["OPENAI_API_KEY"] = api_key
 @st.cache_data
 def show_pdf(file_path):
     with open(file_path,"rb") as f:
