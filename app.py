@@ -48,10 +48,6 @@ from huggingface_hub import login
 
 
 
-
-api_key ="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"
-os.environ["OPENAI_API_KEY"] = api_key
-
 @st.cache_data
 def show_pdf(file_path):
     with open(file_path,"rb") as f:
