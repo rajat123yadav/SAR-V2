@@ -1,1 +1,1 @@
-api_key=
+api_key= "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"
