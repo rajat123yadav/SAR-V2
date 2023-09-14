@@ -46,8 +46,12 @@ from huggingface_hub import login
 # else:
 #     os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY")
 
+
+
+
 api_key ="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"
 os.environ["OPENAI_API_KEY"] = api_key
+
 @st.cache_data
 def show_pdf(file_path):
     with open(file_path,"rb") as f:
@@ -621,7 +625,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
         # model_name = "hkunlp/instructor-large"
         
         # Memory setup for gpt-3.5
-        llm = ChatOpenAI(temperature=0.1)
+        llm = ChatOpenAI(temperature=0.1, model ='gpt-3.5-turbo')
         memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=500)
         conversation = ConversationChain(llm=llm, memory =memory,verbose=False)
         
