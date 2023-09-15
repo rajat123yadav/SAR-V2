@@ -150,6 +150,18 @@ def embedding_store(pdf_files):
     for file in pdf_files:
       if file.endswith('xlsx'):
         df = pd.read_excel(file, engine='openpyxl')
+        # Find the row index where the table data starts
+        data_start_row = 0  # Initialize to 0
+        for i, row in df.iterrows():
+            if row.notna().all():
+                data_start_row = i
+                break
+        df.columns = df.iloc[data_start_row]
+        
+        # Extract the text content above the data
+        text += "\n".join(df.iloc[:data_start_row].apply(lambda x: "\t".join(map(str, x)), axis=1)).replace('nan','')
+        
+        df = df.iloc[data_start_row:]
         text_buffer = StringIO()
         df.to_csv(text_buffer, sep='\t', index=False)
         text += text_buffer.getvalue()
@@ -1566,9 +1578,22 @@ elif selected_option_case_type == "AML":
                         
                         # Read the Excel file into a DataFrame
                         df = pd.read_excel(selected_file_path, engine='openpyxl')
+                        # Find the row index where the table data starts
+                        data_start_row = 0  # Initialize to 0
+                        for i, row in df.iterrows():
+                            if row.notna().all():
+                                data_start_row = i
+                                break       
+                        df.columns = df.iloc[data_start_row]
+                        
+                        # Extract the text content above the data
+                        text_content = "\n".join(df.iloc[:data_start_row].apply(lambda x: "\t".join(map(str, x)), axis=1)).replace('nan','')
+                        
+                        Display the text content using Streamlit
+                        st.text(text_content)
+                        
+                        st.write(df.iloc[data_start_row:], index=False)
                 
-                        # Display the DataFrame in Streamlit
-                        st.write(df)
                  
                     else:
                         selected_file_path = os.path.join(directoty_path, selected_file_name)
