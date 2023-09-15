@@ -161,7 +161,7 @@ def embedding_store(pdf_files):
         # Extract the text content above the data
         text += "\n".join(df.iloc[:data_start_row].apply(lambda x: "\t".join(map(str, x)), axis=1)).replace('nan','')
         
-        df = df.iloc[data_start_row:]
+        df = df.iloc[data_start_row+1:]
         text_buffer = StringIO()
         df.to_csv(text_buffer, sep='\t', index=False)
         text += text_buffer.getvalue()
@@ -1584,7 +1584,6 @@ elif selected_option_case_type == "AML":
                             if row.notna().all():
                                 data_start_row = i
                                 break       
-                        df.columns = df.iloc[data_start_row]
                         
                         # Extract the text content above the data
                         text_content = "\n".join(df.iloc[:data_start_row].apply(lambda x: "\t".join(map(str, x)), axis=1)).replace('nan','')
