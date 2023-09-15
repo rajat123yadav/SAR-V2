@@ -1589,7 +1589,7 @@ elif selected_option_case_type == "AML":
                         # Extract the text content above the data
                         text_content = "\n".join(df.iloc[:data_start_row].apply(lambda x: "\t".join(map(str, x)), axis=1)).replace('nan','')
                         
-                        Display the text content using Streamlit
+                        
                         st.text(text_content)
                         
                         st.write(df.iloc[data_start_row:], index=False)
