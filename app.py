@@ -1565,7 +1565,7 @@ elif selected_option_case_type == "AML":
                         selected_file_path = os.path.join(directoty_path, selected_file_name)
                         
                         # Read the Excel file into a DataFrame
-                        df = pd.read_excel(uploaded_file, engine='openpyxl')
+                        df = pd.read_excel(selected_file_path, engine='openpyxl')
                 
                         # Display the DataFrame in Streamlit
                         st.write(df)
