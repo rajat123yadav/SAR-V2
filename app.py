@@ -148,7 +148,7 @@ def embedding_store(pdf_files):
         text += page.extract_text()
       
     for file in pdf_files:
-      if file.endswith('.xlsx'):
+      if file.endswith('xlsx'):
         df = pd.read_excel(file)
         text_buffer = StringIO()
         df.to_csv(text_buffer, sep='\t', index=False)
@@ -1608,7 +1608,7 @@ elif selected_option_case_type == "AML":
     
     
         for fetched_pdf in fetched_files:
-            file_ext = tuple("pdf","xlsx")
+            file_ext = ("pdf","xlsx")
             if fetched_pdf.endswith(file_ext):
                 file_pth = os.path.join('ml_doc/', fetched_pdf)
                 # st.write(file_pth)
