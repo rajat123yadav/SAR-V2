@@ -136,11 +136,25 @@ def embed(model_name):
 
 @st.cache_data
 def embedding_store(pdf_files):
-    merged_pdf = merge_pdfs(pdf_files)
+    pdf_only =[]
+    for file in pdf_files:
+      if file.endswith('.pdf'):
+        pdf_only.append(file)       
+      
+    merged_pdf = merge_pdfs(pdf_only)
     final_pdf = PyPDF2.PdfReader(merged_pdf)
     text = ""
     for page in final_pdf.pages:
         text += page.extract_text()
+      
+    for file in pdf_files:
+      if file.endswith('.xlsx'):
+        df = pd.read_excel(file)
+        text_buffer = StringIO()
+        df.to_csv(text_buffer, sep='\t', index=False)
+        text += text_buffer.getvalue()
+        text_buffer.close()
+        
     texts =  text_splitter.split_text(text)
     docs = text_to_docs(texts)
     docsearch = FAISS.from_documents(docs, hf_embeddings)
@@ -698,7 +712,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
         if st.button("Generate Insights",disabled=st.session_state.disabled):
             if temp_file_path is not None:
                 # File handling logic
-                _, docsearch = embedding_store(temp_file_path)
+                  _, docsearch = embedding_store(temp_file_path)
                 if st.session_state.llm == "Open-AI":
                     queries ="Please provide the following information regarding the possible fraud case: What is the name of the customer name,\
                     has any suspect been reported, list the merchant name, how was the bank notified, when was the bank notified, what is the fraud type,\
@@ -1594,7 +1608,7 @@ elif selected_option_case_type == "AML":
     
     
         for fetched_pdf in fetched_files:
-            file_ext = tuple("pdf")
+            file_ext = tuple("pdf","xlsx")
             if fetched_pdf.endswith(file_ext):
                 file_pth = os.path.join('ml_doc/', fetched_pdf)
                 # st.write(file_pth)
