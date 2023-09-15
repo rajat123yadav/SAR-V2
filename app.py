@@ -45,7 +45,8 @@ from huggingface_hub import login
 #     os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 # else:
 #     os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY")
-
+api_key ="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"
+os.environ["OPENAI_API_KEY"] = api_key
 
 
 @st.cache_data
