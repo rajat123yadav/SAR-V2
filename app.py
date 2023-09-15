@@ -156,7 +156,10 @@ def embedding_store(pdf_files):
             if row.notna().all():
                 data_start_row = i
                 break
-        df.columns = df.iloc[data_start_row]
+              
+        if data_start_row>0:  
+            df.columns = df.iloc[data_start_row]
+          
         
         # Extract the text content above the data
         text += "\n".join(df.iloc[:data_start_row].apply(lambda x: "\t".join(map(str, x)), axis=1)).replace('nan','')
@@ -1584,14 +1587,15 @@ elif selected_option_case_type == "AML":
                             if row.notna().all():
                                 data_start_row = i
                                 break       
-                        
+                        if data_start_row>0:  
+                          df.columns = df.iloc[data_start_row]
                         # Extract the text content above the data
                         text_content = "\n".join(df.iloc[:data_start_row].apply(lambda x: "\t".join(map(str, x)), axis=1)).replace('nan','')
                         
                         
                         st.text(text_content)
                         
-                        st.write(df.iloc[data_start_row:], index=False)
+                        st.write(df.iloc[data_start_row+1:], index=False)
                 
                  
                     else:
