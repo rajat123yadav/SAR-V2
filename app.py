@@ -1578,24 +1578,29 @@ elif selected_option_case_type == "AML":
                         
                     elif selected_file_name.endswith(file_ext1):
                         selected_file_path = os.path.join(directoty_path, selected_file_name)
-                        
+                        from openpyxl import reader,load_workbook,Workbook
+                        wb=Workbook()
+                        wb = load_workbook(selected_file_path, read_only=False)
+                        st.write(wb.sheetnames)
+                        st.title(wb)
+                        st.write(wb.active)
                         # Read the Excel file into a DataFrame
-                        df = pd.read_excel(selected_file_path, engine='openpyxl')
-                        # Find the row index where the table data starts
-                        data_start_row = 0  # Initialize to 0
-                        for i, row in df.iterrows():
-                            if row.notna().all():
-                                data_start_row = i
-                                break       
-                        if data_start_row>0:  
-                          df.columns = df.iloc[data_start_row]
-                        # Extract the text content above the data
-                        text_content = "\n".join(df.iloc[:data_start_row].apply(lambda x: "\t".join(map(str, x)), axis=1)).replace('nan','')
+                        # df = pd.read_excel(selected_file_path, engine='openpyxl')
+                        # # Find the row index where the table data starts
+                        # data_start_row = 0  # Initialize to 0
+                        # for i, row in df.iterrows():
+                        #     if row.notna().all():
+                        #         data_start_row = i
+                        #         break       
+                        # if data_start_row>0:  
+                        #   df.columns = df.iloc[data_start_row]
+                        # # Extract the text content above the data
+                        # text_content = "\n".join(df.iloc[:data_start_row].apply(lambda x: "\t".join(map(str, x)), axis=1)).replace('nan','')
                         
                         
-                        st.text(text_content)
+                        # st.text(text_content)
                         
-                        st.write(df.iloc[data_start_row+1:], index=False)
+                        # st.write(df.iloc[data_start_row+1:], index=False)
                 
                  
                     else:
