@@ -149,7 +149,7 @@ def embedding_store(pdf_files):
       
     for file in pdf_files:
       if file.endswith('xlsx'):
-        df = pd.read_excel(file)
+        df = pd.read_excel(file, engine='openpyxl')
         text_buffer = StringIO()
         df.to_csv(text_buffer, sep='\t', index=False)
         text += text_buffer.getvalue()
@@ -1548,7 +1548,9 @@ elif selected_option_case_type == "AML":
                     selected_file_name = st.selectbox(":blue[Select a file to View]",fetched_files)
                     st.write("Selected File: ", selected_file_name)
                     st.session_state.disabled = False
-                    file_ext = tuple("pdf")
+                    file_ext = tuple("pdf")  
+                    file_ext1 = tuple("xlsx")
+                  
                     if selected_file_name.endswith(file_ext):
                         selected_file_path = os.path.join(directoty_path, selected_file_name)
                         #converting pdf data to bytes so that render_pdf_as_images could read it
@@ -1558,6 +1560,16 @@ elif selected_option_case_type == "AML":
                         st.subheader(f"Contents of {selected_file_name}")
                         for img_bytes in pdf_images:
                             st.image(img_bytes, use_column_width=True)
+                        
+                    elif selected_file_name.endswith(file_ext1):
+                        selected_file_path = os.path.join(directoty_path, selected_file_name)
+                        
+                        # Read the Excel file into a DataFrame
+                        df = pd.read_excel(uploaded_file, engine='openpyxl')
+                
+                        # Display the DataFrame in Streamlit
+                        st.write(df)
+                 
                     else:
                         selected_file_path = os.path.join(directoty_path, selected_file_name)
                         # This is showing png,jpeg files
