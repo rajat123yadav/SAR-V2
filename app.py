@@ -41,12 +41,10 @@ from huggingface_hub import login
 #from scipy.io.wavfile import write
                                 
 # Setting Env
-# if st.secrets["OPENAI_API_KEY"] is not None:
-#     os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
-# else:
-#     os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY")
-api_key ="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"
-os.environ["OPENAI_API_KEY"] = api_key
+if st.secrets["OPENAI_API_KEY"] is not None:
+    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+else:
+    os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY")
 
 
 @st.cache_data
