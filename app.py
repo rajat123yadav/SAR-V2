@@ -664,7 +664,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
         llm = ChatOpenAI(temperature=0.1, model ='gpt-3.5-turbo')
         memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=500)
         conversation = ConversationChain(llm=llm, memory =memory,verbose=False)
-        
+
         
         # Adding condition on embedding
         try:
@@ -1397,6 +1397,13 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     llm=llm, 
                     memory = memory,
                     verbose=True)
+                    out = conversation.predict(input='You need to act as a Financial analyst to check if this is a SAR or not, given the context. You can use the chat_history to get the context.\n\ \
+                            A SAR case is usually determined by following factors: \
+                            1. If there is a suspect involved. \
+                            2. If there is a police report filed. \
+                            3. If there is a any fradulent transaction made. \
+                            Give your answer by considering all the factors mentioned above.')
+                  
                     st.session_state["tmp_narrative_gpt"] = conversation.predict(input=" You need to create a SAR Narrative which should include the answers to all the questions mentioned below in ():\
                                                                                           (1.What is the suspect's name ? \
                                                                                           2. When did the fraud occur? \
@@ -1742,8 +1749,8 @@ elif selected_option_case_type == "AML":
             else: pass
     
          #This is the embedding model
-        model_name = "sentence-transformers/all-MiniLM-L6-v2"
-        # model_name = "hkunlp/instructor-large"
+        model_name= "thenlper/gte-large"
+        
         
         # Memory setup for gpt-3.5
         llm = ChatOpenAI(temperature=0.1)
