@@ -305,6 +305,7 @@ if "tmp_summary_gpt" not in st.session_state:
     st.session_state["tmp_summary_gpt"] = ''
 if "tmp_summary_llama" not in st.session_state:
     st.session_state["tmp_summary_llama"] = ''
+
 if "tmp_narrative_gpt" not in st.session_state:
     st.session_state["tmp_narrative_gpt"] = ''
 if "tmp_narrative_llama" not in st.session_state:
@@ -1418,7 +1419,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     for key,value in narrative_dict_llama.items():
                         text.append(value)
                     st.session_state["tmp_narrative_llama"] = llm_chain_llama.run(text)
-                    st.write(st.session_state["tmp_narrative_llama"])
+                    st.write(st.session_state["tmp_narrative_llama"]) 
     
         
         
