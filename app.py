@@ -1222,7 +1222,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
     # Create a Word document with the table and some text
     
     # col_d1, col_d2 = st.columns(2)
-    col_s1, col_d1, col_d2 = st.tabs(["Summarize","Download Report", "Download Case Package"])
+    col_s1, col_s2, col_d1, col_d2 = st.tabs(["Summarize","SAR Narrative","Download Report", "Download Case Package"])
     
     with col_s1:
         with st.spinner('Summarization ...'):
@@ -1266,7 +1266,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
         
         tmp_summary = []
         tmp_table = pd.DataFrame()
-    
+     
         if st.session_state.llm == "Open-AI":
             st.session_state.disabled=False
             tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_gpt"]], ignore_index=True)
@@ -1370,7 +1370,47 @@ elif selected_option_case_type == "Fraud transaction dispute":
         except NameError:
             pass
     
-                
+
+    with col_s2:
+        with st.spinner('SAR Narrative ...'):
+            if st.button("SAR Narrative",disabled=st.session_state.disabled):
+                if st.session_state.llm == "Open-AI":
+                    st.session_state.disabled=False
+            
+                    narrative_dict_gpt = st.session_state.res_df_gpt.set_index('Question')['Answer'].to_dict()
+                    memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=300)
+                    memory.save_context({"input": "This is the entire summary"}, 
+                                    {"output": f"{narrative_dict_gpt}"})
+                    conversation = ConversationChain(
+                    llm=llm, 
+                    memory = memory,
+                    verbose=True)
+                    st.session_state["tmp_narrative_gpt"] = conversation.predict(input="Provide a detailed summary of the text provided by reframing the sentences. Provide the summary in a single paragraph. This Paragraph will be called as a SAR narrative. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
+                    # showing the text in a textbox
+                    # usr_review = st.text_area("", value=st.session_state["tmp_summary_gpt"])
+                    # if st.button("Update Summary"):
+                    #     st.session_state["fin_opt"] = usr_review
+                    st.write(st.session_state["tmp_narrative_gpt"])
+    
+    
+                elif st.session_state.llm == "Open-Source":
+                    st.session_state.disabled=False
+                    template = """Write a detailed summary. This summary will be called as a SAR narrative.
+                    Return your response in a single paragraph.
+                    ```{text}```
+                    Response: """
+                    prompt = PromptTemplate(template=template,input_variables=["text"])
+                    llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
+    
+                    narrative_dict_llama = st.session_state.res_df_llama.set_index('Question')['Answer']
+                    text = []
+                    for key,value in narrative_dict_llama.items():
+                        text.append(value)
+                    st.session_state["tmp_narrative_llama"] = llm_chain_llama.run(text)
+                    st.write(st.session_state["tmp_narrative_llama"])
+    
+        
+        
     with col_d1:
     # Applying to download button -> download_button
         st.markdown("""
