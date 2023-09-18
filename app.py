@@ -1749,7 +1749,7 @@ elif selected_option_case_type == "AML":
             else: pass
     
          #This is the embedding model
-        model_name= "thenlper/gte-large"
+        model_name= "sentence-transformers/all-MiniLM-L6-v2"
         
         
         # Memory setup for gpt-3.5
