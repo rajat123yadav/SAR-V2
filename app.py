@@ -1397,7 +1397,15 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     llm=llm, 
                     memory = memory,
                     verbose=True)
-                    st.session_state["tmp_narrative_gpt"] = conversation.predict(input="Provide a detailed summary of the text provided by reframing the sentences. Provide the summary in a single paragraph. This Paragraph will be called as a SAR narrative. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
+                    st.session_state["tmp_narrative_gpt"] = conversation.predict(input=" You need to create a SAR Narrative which should include the answers to all the questions mentioned below in ():\
+                                                                                          (1.What is the suspect's name ? \
+                                                                                          2. When did the fraud occur? \
+                                                                                          3.What type of fraud is taking place? \
+                                                                                          4.What type of transaction is involved? \
+                                                                                          5.How did the fraud occur? \
+                                                                                          6.Is it a SAR case? If yes, then why?) \
+                                                                                          Create a concise SAR narrative in not more than 100 words considering all the factors mentioned above. \
+                                                                                          You can use the chat_history to answer these questions. Please don't include words like these: 'chat summary', 'includes information' in my SAR Narrative.")
                     # showing the text in a textbox
                     # usr_review = st.text_area("", value=st.session_state["tmp_summary_gpt"])
                     # if st.button("Update Summary"):
@@ -1407,8 +1415,15 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
                 elif st.session_state.llm == "Open-Source":
                     st.session_state.disabled=False
-                    template = """Write a detailed summary. This summary will be called as a SAR narrative.
-                    Return your response in a single paragraph.
+                    template = """You need to create a SAR Narrative which should include the answers to all the questions mentioned below in ():\
+                                                                                          (1.What is the suspect's name ? \
+                                                                                          2. When did the fraud occur? \
+                                                                                          3.What type of fraud is taking place? \
+                                                                                          4.What type of transaction is involved? \
+                                                                                          5.How did the fraud occur? \
+                                                                                          6.Is it a SAR case? If yes, then why?) \
+                                                                                          Create a concise SAR narrative in not more than 100 words considering all the factors mentioned above. \
+                                                                                          You can use the chat_history to answer these questions. Please don't include words like these: 'chat summary', 'includes information' in my SAR Narrative.")
                     ```{text}```
                     Response: """
                     prompt = PromptTemplate(template=template,input_variables=["text"])
