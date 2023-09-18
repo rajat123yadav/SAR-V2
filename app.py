@@ -295,10 +295,21 @@ if "tmp_table_gpt" not in st.session_state:
     st.session_state.tmp_table_gpt=pd.DataFrame()
 if "tmp_table_llama" not in st.session_state:
     st.session_state.tmp_table_llama=pd.DataFrame()
+
+if "tmp_narr_table_gpt" not in st.session_state:
+    st.session_state.tmp_narr_table_gpt=pd.DataFrame()
+if "tmp_narr_table_llama" not in st.session_state:
+    st.session_state.tmp_narr_table_llama=pd.DataFrame()
+  
 if "tmp_summary_gpt" not in st.session_state:
     st.session_state["tmp_summary_gpt"] = ''
 if "tmp_summary_llama" not in st.session_state:
     st.session_state["tmp_summary_llama"] = ''
+if "tmp_narrative_gpt" not in st.session_state:
+    st.session_state["tmp_narrative_gpt"] = ''
+if "tmp_narrative_llama" not in st.session_state:
+    st.session_state["tmp_narrative_llama"] = ''
+
 if "case_num" not in st.session_state:
     st.session_state.case_num = ''
 if "fin_opt" not in st.session_state:
@@ -792,6 +803,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                         pass
                     st.table(res_df_gpt)
                     st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, res_df_gpt], ignore_index=True)
+                    st.session_state["tmp_narr_table_gpt"] = pd.concat([st.session_state.tmp_narr_table_gpt, res_df_gpt], ignore_index=True)
                 
                 
                 elif st.session_state.llm == "Open-Source":
@@ -913,10 +925,9 @@ elif selected_option_case_type == "Fraud transaction dispute":
                         pass
                     st.table(res_df_llama)
                     st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
+                    st.session_state["tmp_narr_table_llama"] = pd.concat([st.session_state.tmp_narr_table_llama, res_df_llama], ignore_index=True)
                 
-                
-    
-    
+      
     st.markdown("---")
     
     # For input box outside of template4
@@ -1377,7 +1388,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                 if st.session_state.llm == "Open-AI":
                     st.session_state.disabled=False
             
-                    narrative_dict_gpt = st.session_state.res_df_gpt.set_index('Question')['Answer'].to_dict()
+                    narrative_dict_gpt = st.session_state.tmp_narr_table_gpt.set_index('Question')['Answer'].to_dict()
                     memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=300)
                     memory.save_context({"input": "This is the entire summary"}, 
                                     {"output": f"{narrative_dict_gpt}"})
@@ -1402,7 +1413,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     prompt = PromptTemplate(template=template,input_variables=["text"])
                     llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
     
-                    narrative_dict_llama = st.session_state.res_df_llama.set_index('Question')['Answer']
+                    narrative_dict_llama = st.session_state.tmp_narr_table_llama.set_index('Question')['Answer']
                     text = []
                     for key,value in narrative_dict_llama.items():
                         text.append(value)
