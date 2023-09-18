@@ -1798,35 +1798,70 @@ elif selected_option_case_type == "AML":
                 # File handling logic
                 _, docsearch = embedding_store(temp_file_path)
                 if st.session_state.llm == "Open-AI":
-                    queries ="Please provide the following information regarding the possible money laundering case: Is there any potential Money Laundering activity based on the transaction statements,\
-                          What are the transaction that can be associated with Money Laundering activity?,\
-                          When is the Money laundering activity taking place?,\
-                         What type of Money laundering activity is taking place?,\
-                          What is the total amount associated with the money laundering activity?\
-                    and based on the evidence, is this a money laundering case(Summarize all the questions asked prior to this in a detailed manner),that's the answer of\
-                    whether this is a money laundering case\
-                    "
-                    contexts = docsearch.similarity_search(queries, k=5) 
-                    prompts = f''' Give a the answer to the below questions as truthfully and in as detailed as possible in the form of sentences\
-                    as per given context only,\n\n\
-                          Is there any potential Money Laundering activity based on the transaction statements \n\
-                          What are the transaction that can be associated with Money Laundering activity?\n\
-                          When is the Money laundering activity taking place?\n\
-                          What type of Money laundering activity is taking place?\n\
-                          What is the total amount associated with the money laundering activity? \n\  
-                        Context: {contexts}\n\
-                        Response (in the python dictionary format \
-                        where the dictionary key would carry the questions and its value would have a descriptive answer to the questions asked): '''
-                        
-                    response = usellm(prompts)
+                    chat_history_1 = {}
+    
+                    query = "Is there any potential Money Laundering activity based on the transaction statements?"
+                    context_1 = docsearch.similarity_search(query, k=5)
+                    prompt_1 = f'''You Are an Anti-Money Laundering Specialist, detect if any potential money laundering activity is taking place or not given the context. Money laundering transactions often involve characteristics like unusual transaction patterns that does not match with customer transaction history, large cash deposits equal and above $10,000 followed by a large amount transfer or Structuring, rapid movement of funds, transactions with high-risk countries, or unexplained funds. Answer in only Yes or No.\n\n\
+                            Question: {query}\n\
+                            Context: {context_1}\n\
+                            Response: (Give me response in one sentence. Do not give me any Explanation or Note)'''
+                    response = usellm(prompt_1)
+                    chat_history_1[query] = response
+    
+    
+                    query = "What are the transaction that can be associated with Money Laundering activity?"
+                    context_1 = docsearch.similarity_search(query, k=5)
+                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
+                                that can be potentially associated with the Money Laundering activity. Money laundering \
+                                transactions often involve characteristics like large cash deposits, rapid movement of funds, \
+                                transactions with high-risk countries, structuring, or unexplained funds. Give precise response, \
+                                do not include any other unnecessary information.\n\n
+                
+                                Context: {context_1}\n\
+                                Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
+
+                    response = usellm(prompt_1)
+                    chat_history_1[query] = response
+
+                    query = "When is the Money laundering activity taking place?"
+                    context_1 = docsearch.similarity_search(query, k=5)
+                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give all the dates when a money laundering activity is taking place given the context. Money laundering transactions often \
+                                involve characteristics like large cash deposits equal and above $10,000 followed by a large amount transfer or Structuring, \
+                                rapid movement of funds, transactions with high-risk countries, or unexplained funds. answer precisely\n\n\
+                                Context: {context_1}\n\
+                                Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
+
+                    response = usellm(prompt_1)
+                    chat_history_1[query] = response
+
+                    query = "What type of Money laundering activity is taking place?"
+                    context_1 = docsearch.similarity_search(query, k=5)
+                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the \
+                                type of money laundering activity that is taking place based on the transaction \
+                                summary. The type may include Layering, Structuring, Round-tripping etc. \
+                                give a precise answer, do not explain the type.\n\n\
+                                Context: {context_1}\n\
+                                Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
+
+                    response = usellm(prompt_1)
+                    chat_history_1[query] = response
+
+                    query = "What is the total amount associated with the money laundering activity?"
+                    context_1 = docsearch.similarity_search(query, k=5)
+                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the total amount \
+                                associated with money laundering activity that is taking place Based on the \
+                                transaction statement, for getting the total amount, you can add all the money laundering \
+                                transactions amount.\n\n\
+                                Context: {context_1}\n\
+                                Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
                     
-                    
-                    resp_dict_obj = json.loads(response)
-                    res_df_gpt = pd.DataFrame(resp_dict_obj.items(), columns=['Question','Answer'])
-                    # st.table(res_df_gpt)
+                    response = usellm(prompt_1)
+                    chat_history_1[query] = response
     
     
                     try:
+                        res_df_gpt = pd.DataFrame(list(chat_history_1.items()), columns=['Question','Answer'])
                         res_df_gpt.reset_index(drop=True, inplace=True)
                         index_ = pd.Series([1,2,3,4,5])
                         res_df_gpt = res_df_gpt.set_index([index_])
@@ -1843,7 +1878,7 @@ elif selected_option_case_type == "AML":
     
                     query = "Is there any potential Money Laundering activity based on the transaction statements?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 = f'''You Are an Anti-Money Laundering Specialist, identify if any potential money laundering transaction is taking place or not based on the transaction statement. Answer in only Yes or No.\n\n\
+                    prompt_1 = f'''You Are an Anti-Money Laundering Specialist, detect if any potential money laundering activity is taking place or not given the context. Money laundering transactions often involve characteristics like unusual transaction patterns that does not match with customer transaction history, large cash deposits equal and above $10,000 followed by a large amount transfer or Structuring, rapid movement of funds, transactions with high-risk countries, or unexplained funds. Answer in only Yes or No.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give me response in one sentence. Do not give me any Explanation or Note)'''
@@ -1853,8 +1888,12 @@ elif selected_option_case_type == "AML":
     
                     query = "What are the transaction that can be associated with Money Laundering activity?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Give the transactions that can be associated with the Money Laundering activity. Give only the transaction number associated with that money laundering activity and its corresponding detail,\
-                                    do not include any other information\n\n\
+                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
+                                that can be potentially associated with the Money Laundering activity. Money laundering \
+                                transactions often involve characteristics like large cash deposits, rapid movement of funds, \
+                                transactions with high-risk countries, structuring, or unexplained funds. Give precise response, \
+                                do not include any other unnecessary information.\n\n
+                
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
 
@@ -1863,7 +1902,9 @@ elif selected_option_case_type == "AML":
 
                     query = "When is the Money laundering activity taking place?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give all the dates when a money laundering activity is taking place given the context, answer precisely\n\n\
+                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give all the dates when a money laundering activity is taking place given the context. Money laundering transactions often \
+                                involve characteristics like large cash deposits equal and above $10,000 followed by a large amount transfer or Structuring, \
+                                rapid movement of funds, transactions with high-risk countries, or unexplained funds. answer precisely\n\n\
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
 
@@ -1872,7 +1913,10 @@ elif selected_option_case_type == "AML":
 
                     query = "What type of Money laundering activity is taking place?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the type of money laundering activity that is taking place given the context, answer precisely\n\n\
+                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the \
+                                type of money laundering activity that is taking place based on the transaction \
+                                summary. The type may include Layering, Structuring, Round-tripping etc. \
+                                give a precise answer, do not explain the type.\n\n\
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
 
@@ -1881,7 +1925,10 @@ elif selected_option_case_type == "AML":
 
                     query = "What is the total amount associated with the money laundering activity?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the total amount associated with money laundering activity that is taking place Based on the transaction statement, answer precisely\n\n\
+                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the total amount \
+                                associated with money laundering activity that is taking place Based on the \
+                                transaction statement, for getting the total amount, you can add all the money laundering \
+                                transactions amount.\n\n\
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
                     
