@@ -167,7 +167,7 @@ def embedding_store(pdf_files):
         df = df.iloc[data_start_row+1:]
         text_buffer = StringIO()
         df.to_csv(text_buffer, sep='\t', index=False)
-        text += text_buffer.getvalue()
+        text += "\n\n"+ text_buffer.getvalue()
         text_buffer.close()
         
     texts =  text_splitter.split_text(text)
@@ -1613,12 +1613,12 @@ elif selected_option_case_type == "AML":
         # Evidence uploader/Fetch    
         st.header("Upload Evidence")
         
-    
+        directoty_path = "ml_doc/"
+        fetched_files = read_pdf_files(directoty_path)
         if selected_option:
             # Create two columns
 
-            directoty_path = "ml_doc/"
-            fetched_files = read_pdf_files(directoty_path)
+            
             col1_up, col2_up = st.tabs(["Fetch Evidence", "Upload Evidence"])
             with col1_up:
                 
