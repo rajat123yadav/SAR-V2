@@ -1917,9 +1917,10 @@ elif selected_option_case_type == "AML":
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give me response in one sentence. Do not give me any Explanation or Note)'''
+                  
                     response = llama_llm(llama_13b,prompt_1)
                     chat_history[query] = response
-    
+                  
     
                     query = "What are the transaction that can be associated with Money Laundering activity?"
                     context_1 = docsearch.similarity_search(query, k=5)
@@ -1927,7 +1928,7 @@ elif selected_option_case_type == "AML":
                                 that can be potentially associated with the Money Laundering activity. Money laundering \
                                 transactions often involve characteristics like large cash deposits, High value transactions greater than or equal to $10,000 \
                                 within a short span of time, transactions with high-risk countries, money laundered via structuring process. Give precise response, \
-                                do not include any other unnecessary information.\n\n
+                                do not include any other unnecessary information or the Balance amount.\n\n
                 
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
@@ -1939,22 +1940,22 @@ elif selected_option_case_type == "AML":
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give all the dates when a money laundering activity is taking place given the context. Money laundering transactions often \
                                 involve characteristics like large cash deposits equal and above $10,000 followed by a large amount transfer or Structuring, \
-                                rapid movement of funds, transactions with high-risk countries, or unexplained funds. Specifically, all transactions above or \ 
-                                equal to $10,000 are considered to be a potential money laundering transaction. answer precisely\n\n\
+                                rapid movement of funds, transactions with high-risk countries, or unexplained source of funds. Specifically, all transactions above or \ 
+                                equal to $10,000 are considered to be a potential money laundering transaction. Answer the question considering the factors mentioned above with transaction details.\n\n\
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
 
                     response = llama_llm(llama_13b,prompt_1)
                     chat_history[query] = response
-
+                  
                     query = "What type of Money laundering activity is taking place?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the \
                                 type of money laundering activity that is taking place based on the transaction \
                                 patterns observed. The type may include Layering, Structuring, Round-tripping etc. \
-                                Look carefully into the transactions statement and give a precise answer.\n\n\
+                                Look carefully into the transactions statement and give a precise answer with explanation of why you think a specific type of money laundering is happening..\n\n\
                                 Context: {context_1}\n\
-                                Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
+                                Response: (Give me a concise response in not more than 50 words.Do not give me any Explanation,Note)'''
 
                     response = llama_llm(llama_13b,prompt_1)
                     chat_history[query] = response
