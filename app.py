@@ -780,7 +780,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     # st.write(response)
                     resp_dict_obj = json.loads(response)
                   
-                   query = "Is it a SAR Case?"
+                    query = "Is it a SAR Case?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You need to act as a Financial analyst to check if this is a SAR or not, given the context. You can use the chat_history to get the context.\n\ \
                             A SAR case is usually determined by the following factors: \
@@ -924,7 +924,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     response = llama_llm(llama_13b,prompt_1)
                     chat_history[query] = response
 
-                  query = "Is it a SAR Case?"
+                    query = "Is it a SAR Case?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You need to act as a Financial analyst to check if this is a SAR or not, given the context. You can use the chat_history to get the context.\n\ \
                             A SAR case is usually determined by the following factors: \
