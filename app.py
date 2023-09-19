@@ -942,7 +942,6 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     res_df_llama_new = res_df_llama.iloc[:-1,]
     
                     try:
-                        res_df_llama_new = pd.DataFrame(list(chat_history.items()), columns=['Question','Answer'])
                         res_df_llama_new.reset_index(drop=True, inplace=True)
                         index_ = pd.Series([1,2,3,4,5,6,7,8,9,10])
                         res_df_llama_new = res_df_llama_new.set_index([index_])
