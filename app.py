@@ -1857,7 +1857,7 @@ elif selected_option_case_type == "AML":
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give all the dates when a money laundering activity is taking place given the context. Money laundering transactions often \
                                 involve characteristics like large cash deposits equal and above $10,000 followed by a large amount transfer or Structuring, \
                                 rapid movement of funds, transactions with high-risk countries, or unexplained source of funds. Specifically, all transactions above or \ 
-                                equal to $10,000 are considered to be a potential money laundering transaction. Answer the question considering all of the factors mentioned above with dates and transaction amounts.\n\n\
+                                equal to $10,000 are considered to be a potential money laundering transaction. Answer the question considering the factors mentioned above with transaction details.\n\n\
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
 
