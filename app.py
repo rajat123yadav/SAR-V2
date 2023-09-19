@@ -779,30 +779,38 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     # resp_dict = usellm(prompt_conv)
                     # st.write(response)
                     resp_dict_obj = json.loads(response)
-                    res_df_gpt = pd.DataFrame(resp_dict_obj.items(), columns=['Question','Answer'])
-                    # st.table(res_df_gpt)
-    
-                    # try:
-                        # res_df_gpt.Question = res_df_gpt.Question.apply(lambda x: x.split(".")[1])
-                        # res_df_gpt.index = res_df.index + 1
-                        # df_base_gpt = res_df_gpt.copy(deep=True)
-                        # df_base_gpt["S.No."] = df_base_gpt.index
-                        # df_base_gpt = df_base_gpt.loc[:,['S.No.','Question','Answer']]
-                        # st.write(df_base_gpt)
-                    # except IndexError:
-                    #     pass
-                    # #st.table(res_df_gpt)
-                    # st.markdown(df_base_gpt.style.hide(axis="index").to_html(), unsafe_allow_html=True)
-                    # st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, res_df_gpt], ignore_index=True)
-                    
+                  
+                   query = "Is it a SAR Case?"
+                    context_1 = docsearch.similarity_search(query, k=5)
+                    prompt_1 =  f'''You need to act as a Financial analyst to check if this is a SAR or not, given the context. You can use the chat_history to get the context.\n\ \
+                            A SAR case is usually determined by the following factors: \
+                            1. If there is a potential suspect name present. \
+                            2. If there is a police report filed. \
+                            3. If there is a any fradulent transaction made by the suspect. \
+                            Give your answer as yes or no.\n\n\
+                           Context: {context_1}\n\
+                           Response: '''
+
+                    response = usellm(prompt_1)
+                    is_sar = response
+                    resp_dict_obj[query] = response
+            
+                    res_df_gpt = pd.DataFrame(resp_dict_obj.items(), columns=['Question','Answer'])            
+                    res_df_gpt_new = res_df_gpt.iloc[:-1]
+              
                     try:
-                        res_df_gpt.reset_index(drop=True, inplace=True)
+                        res_df_gpt_new.reset_index(drop=True, inplace=True)
                         index_ = pd.Series([1,2,3,4,5,6,7,8,9,10])
-                        res_df_gpt = res_df_gpt.set_index([index_])
+                        res_df_gpt_new = res_df_gpt_new.set_index([index_])
                         # st.write(res_df_gpt)
+              
                     except IndexError: 
                         pass
-                    st.table(res_df_gpt)
+                    
+                    st.table(res_df_gpt_new)
+                    st.write(res_df_gpt)
+
+                    #data stored in  session state
                     st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, res_df_gpt], ignore_index=True)
                     st.session_state["tmp_narr_table_gpt"] = pd.concat([st.session_state.tmp_narr_table_gpt, res_df_gpt], ignore_index=True)
                 
@@ -915,16 +923,37 @@ elif selected_option_case_type == "Fraud transaction dispute":
                                 Response: (Provide a concise Response in a single sentence. Do not write any extra [Explanation, Note, Descricption].)'''
                     response = llama_llm(llama_13b,prompt_1)
                     chat_history[query] = response
+
+                  query = "Is it a SAR Case?"
+                    context_1 = docsearch.similarity_search(query, k=5)
+                    prompt_1 =  f'''You need to act as a Financial analyst to check if this is a SAR or not, given the context. You can use the chat_history to get the context.\n\ \
+                            A SAR case is usually determined by the following factors: \
+                            1. If there is a potential suspect name present. \
+                            2. If there is a police report filed. \
+                            3. If there is a any fradulent transaction made by the suspect. \
+                            Give your answer as yes or no.\n\n\
+                           Context: {context_1}\n\
+                           Response: '''
+
+                    response = llama_llm(llama_13b,prompt_1)
+                    chat_history[query] = response
+
+                    res_df_llama = pd.DataFrame(chat_history.items(), columns=['Question','Answer'])            
+                    res_df_llama_new = res_df_llama.iloc[:-1]
     
                     try:
-                        res_df_llama = pd.DataFrame(list(chat_history.items()), columns=['Question','Answer'])
-                        res_df_llama.reset_index(drop=True, inplace=True)
+                        res_df_llama_new = pd.DataFrame(list(chat_history.items()), columns=['Question','Answer'])
+                        res_df_llama_new.reset_index(drop=True, inplace=True)
                         index_ = pd.Series([1,2,3,4,5,6,7,8,9,10])
-                        res_df_llama = res_df_llama.set_index([index_])
+                        res_df_llama_new = res_df_llama_new.set_index([index_])
                         # st.write(res_df_llama)
+          
                     except IndexError: 
                         pass
-                    st.table(res_df_llama)
+
+                    st.table(res_df_llama_new)
+                    st.write(res_df_gpt)
+          
                     st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
                     st.session_state["tmp_narr_table_llama"] = pd.concat([st.session_state.tmp_narr_table_llama, res_df_llama], ignore_index=True)
                 
@@ -1397,12 +1426,6 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     llm=llm, 
                     memory = memory,
                     verbose=True)
-                    out = conversation.predict(input='You need to act as a Financial analyst to check if this is a SAR or not, given the context. You can use the chat_history to get the context.\n\ \
-                            A SAR case is usually determined by following factors: \
-                            1. If there is a suspect involved. \
-                            2. If there is a police report filed. \
-                            3. If there is a any fradulent transaction made. \
-                            Give your answer by considering all the factors mentioned above.')
                   
                     st.session_state["tmp_narrative_gpt"] = conversation.predict(input=" You need to create a SAR Narrative which should include the answers to all the questions mentioned below in ():\
                                                                                           (1.What is the suspect's name ? \
