@@ -939,7 +939,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     chat_history[query] = response
 
                     res_df_llama = pd.DataFrame(chat_history.items(), columns=['Question','Answer'])            
-                    res_df_llama_new = res_df_llama.iloc[:-1]
+                    res_df_llama_new = res_df_llama.iloc[:-1,]
     
                     try:
                         res_df_llama_new = pd.DataFrame(list(chat_history.items()), columns=['Question','Answer'])
@@ -952,7 +952,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                         pass
 
                     st.table(res_df_llama_new)
-                    st.write(res_df_gpt)
+                    st.write(res_df_llama)
           
                     st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
                     st.session_state["tmp_narr_table_llama"] = pd.concat([st.session_state.tmp_narr_table_llama, res_df_llama], ignore_index=True)
