@@ -950,7 +950,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     except IndexError: 
                         pass
 
-                    st.table(res_df_llama_new)
+                    st.table(res_df_llama)
                     st.write(res_df_llama)
           
                     st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
