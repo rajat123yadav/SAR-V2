@@ -462,6 +462,10 @@ elif selected_option_case_type == "Fraud transaction dispute":
     st.markdown("### :blue[Fraud transaction dispute]")
     st.session_state.tmp_table_gpt=pd.DataFrame()
     st.session_state.tmp_narr_table_gpt=pd.DataFrame()
+    res_df_gpt = pd.DataFrame()
+    res_df_gpt_new = pd.DataFrame()
+    res_df_llama = pd.DataFrame()
+    res_df_llama_new = pd.DataFrame()
 
     # Redirect to Merge PDFs page when "Merge PDFs" is selected
     if selected_option == "SAR-2023-24680":
@@ -739,8 +743,6 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
     with st.spinner('Wait for it...'):
         if st.button("Generate Insights",disabled=st.session_state.disabled):
-            res_df_gpt = pd.DataFrame()
-            res_df_gpt_new = pd.DataFrame()
             
             if temp_file_path is not None:
                 # File handling logic
@@ -771,18 +773,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                         
                     response = usellm(prompts)
                     
-                    # memory.save_context({"input": f"{queries}"}, {"output": f"{response}"})
-                    # st.write(response)
-                    # st.write(memory.load_memory_variables({}))
-    
-    
-    
-                    # Convert the response in dictionary from tbl
-                    # prompt_conv = f" Convert the tabular data into a python dictionary\
-                    #     context: {response}\
-                    #     Response (give me the response in the form of a python dictionary with questions exactly as it is): "
-                    # resp_dict = usellm(prompt_conv)
-                    # st.write(response)
+                    
                     resp_dict_obj = json.loads(response)
                   
                     query = "Is it a SAR Case?"
@@ -1229,51 +1220,6 @@ elif selected_option_case_type == "Fraud transaction dispute":
                 st.session_state.tmp_table_llama.drop_duplicates(subset=['Question'])
                 df = pd.DataFrame(columns=['Question','Answer'])
     
-    # col_s1, col_s2 = st.tabs(["Download Report", "Download Case Package"])
-    
-    # if st.session_state.llm == "Open-AI":
-    #     st.session_state.disabled=False
-    #     with st.spinner('Summarization ...'):
-    #         if st.button("Summarize",disabled=st.session_state.disabled):
-    #             summ_dict_gpt = st.session_state.tmp_table_gpt.set_index('Question')['Answer'].to_dict()
-    #             # chat_history = resp_dict_obj['Summary']
-    #             memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=300)
-    #             memory.save_context({"input": "This is the entire summary"}, 
-    #                             {"output": f"{summ_dict_gpt}"})
-    #             conversation = ConversationChain(
-    #             llm=llm, 
-    #             memory = memory,
-    #             verbose=True)
-    #             st.session_state["tmp_summary_gpt"] = conversation.predict(input="Provide a detailed summary of the text provided by reframing the sentences. Provide the summary in a single paragraph. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
-    #             # showing the text in a textbox
-    #             # usr_review = st.text_area("", value=st.session_state["tmp_summary_gpt"])
-    #             # if st.button("Update Summary"):
-    #             #     st.session_state["fin_opt"] = usr_review
-    #             st.write(st.session_state["tmp_summary_gpt"])
-    
-    # elif st.session_state.llm == "Open-Source":
-    #     st.session_state.disabled=False
-    #     with st.spinner('Summarization ...'):
-    #         if st.button("Summarize",disabled=st.session_state.disabled):
-    
-    #             template = """Write a detailed summary.
-    #             Return your response in a single paragraph.
-    #             ```{text}```
-    #             Response: """
-    #             prompt = PromptTemplate(template=template,input_variables=["text"])
-    #             llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
-    
-    #             summ_dict_llama = st.session_state.tmp_table_llama.set_index('Question')['Answer']
-    #             text = []
-    #             for key,value in summ_dict_llama.items():
-    #                 text.append(value)
-    #             st.session_state["tmp_summary_llama"] = llm_chain_llama.run(text)
-    #             st.write(st.session_state["tmp_summary_llama"])
-            
-    
-    # with st.spinner("Downloading...."):
-    # if st.button("Download Response", disabled=st.session_state.disabled):
-    # Create a Word document with the table and some text
     
     # col_d1, col_d2 = st.columns(2)
     col_s1, col_s2, col_d1, col_d2 = st.tabs(["Summarize","SAR Narrative","Download Report", "Download Case Package"])
@@ -1287,7 +1233,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
             
                     summ_dict_gpt = st.session_state.tmp_table_gpt.set_index('Question')['Answer'].to_dict()
                     # chat_history = resp_dict_obj['Summary']
-                    memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=300)
+                    memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=)
                     memory.save_context({"input": "This is the entire summary"}, 
                                     {"output": f"{summ_dict_gpt}"})
                     conversation = ConversationChain(
@@ -1295,10 +1241,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     memory = memory,
                     verbose=True)
                     st.session_state["tmp_summary_gpt"] = conversation.predict(input="Provide a detailed summary of the text provided by reframing the sentences. Provide the summary in a single paragraph. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
-                    # showing the text in a textbox
-                    # usr_review = st.text_area("", value=st.session_state["tmp_summary_gpt"])
-                    # if st.button("Update Summary"):
-                    #     st.session_state["fin_opt"] = usr_review
+                    
                     st.write(st.session_state["tmp_summary_gpt"])
     
     
@@ -1308,13 +1251,17 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     Return your response in a single paragraph.
                     ```{text}```
                     Response: """
-                    prompt = PromptTemplate(template=template,input_variables=["text"])
-                    llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
-    
-                    summ_dict_llama = st.session_state.tmp_table_llama.set_index('Question')['Answer']
                     text = []
                     for key,value in summ_dict_llama.items():
                         text.append(value)
+                    prompt = PromptTemplate(template=template,input_variables=["text"])
+                    summ_dict_llama = st.session_state.tmp_table_llama.set_index('Question')['Answer']
+                    memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=500)
+                    memory.save_context({"input": "This is the entire summary"}, 
+                                    {"output": f"{summ_dict_llama}"})
+                    llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b, memory=memory)
+                    
+            
                     st.session_state["tmp_summary_llama"] = llm_chain_llama.run(text)
                     st.write(st.session_state["tmp_summary_llama"])
     
