@@ -815,6 +815,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     #data stored in  session state
                     st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, res_df_gpt], ignore_index=True)
                     st.session_state["tmp_narr_table_gpt"] = pd.concat([st.session_state.tmp_narr_table_gpt, res_df_gpt], ignore_index=True)
+                    res_df_gpt = pd.DataFrame(columns=['Question','Answer'])
                 
                 
                 elif st.session_state.llm == "Open-Source":
@@ -957,6 +958,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
           
                     st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
                     st.session_state["tmp_narr_table_llama"] = pd.concat([st.session_state.tmp_narr_table_llama, res_df_llama], ignore_index=True)
+                    res_df_llama = pd.DataFrame(columns=['Question','Answer'])
                 
       
     st.markdown("---")
@@ -1085,6 +1087,8 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
                 st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, df], ignore_index=True)
                 st.session_state.tmp_table_gpt.drop_duplicates(subset=['Question'])
+                df = pd.DataFrame(columns=['Question','Answer'])
+              
     
     
     elif st.session_state.llm == "Open-Source":
@@ -1216,6 +1220,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
                 st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, df], ignore_index=True)
                 st.session_state.tmp_table_llama.drop_duplicates(subset=['Question'])
+                df = pd.DataFrame(columns=['Question','Answer'])
     
     # col_s1, col_s2 = st.tabs(["Download Report", "Download Case Package"])
     
@@ -1265,7 +1270,8 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
     # col_d1, col_d2 = st.columns(2)
     col_s1, col_s2, col_d1, col_d2 = st.tabs(["Summarize","SAR Narrative","Download Report", "Download Case Package"])
-    
+
+  
     with col_s1:
         with st.spinner('Summarization ...'):
             if st.button("Summarize",disabled=st.session_state.disabled):
@@ -1925,6 +1931,7 @@ elif selected_option_case_type == "AML":
                         pass
                     st.table(res_df_gpt)
                     st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, res_df_gpt], ignore_index=True)
+                    res_df_gpt = pd.DataFrame(columns=['Question','Answer'])
                 
                 
                 elif st.session_state.llm == "Open-Source":
@@ -2010,6 +2017,7 @@ elif selected_option_case_type == "AML":
                         pass
                     st.table(res_df_llama)
                     st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
+                    res_df_llama = pd.DataFrame(columns=['Question','Answer'])
                 
                 
     
@@ -2064,6 +2072,7 @@ elif selected_option_case_type == "AML":
     
                 st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, df], ignore_index=True)
                 st.session_state.tmp_table_gpt.drop_duplicates(subset=['Question'])
+                df = pd.DataFrame(columns=['Question','Answer'])
     
     
     elif st.session_state.llm == "Open-Source":
@@ -2094,7 +2103,7 @@ elif selected_option_case_type == "AML":
     
                 st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, df], ignore_index=True)
                 st.session_state.tmp_table_llama.drop_duplicates(subset=['Question'])
-    
+                df = pd.DataFrame(columns=['Question','Answer'])
     
     
     # col_d1, col_d2 = st.columns(2)
