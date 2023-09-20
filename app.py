@@ -2089,7 +2089,7 @@ elif selected_option_case_type == "AML":
                     df = pd.DataFrame()
     
                 st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, df], ignore_index=True)
-                st.table(st.session_state["tmp_table_llama"])
+                
                 st.session_state.tmp_table_llama.drop_duplicates(subset=['Question'])
     
     
@@ -2121,6 +2121,7 @@ elif selected_option_case_type == "AML":
     
     
                 elif st.session_state.llm == "Open-Source":
+                    st.write(st.session_state["tmp_table_llama"])
                     st.session_state.disabled=False
                     template = """Write a detailed summary.
                     Return your response in a single paragraph.
