@@ -739,6 +739,9 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
     with st.spinner('Wait for it...'):
         if st.button("Generate Insights",disabled=st.session_state.disabled):
+            res_df_gpt = pd.DataFrame()
+            res_df_gpt_new = pd.DataFrame()
+            
             if temp_file_path is not None:
                 # File handling logic
                 _, docsearch = embedding_store(temp_file_path)
@@ -810,15 +813,17 @@ elif selected_option_case_type == "Fraud transaction dispute":
                         pass
                     
                     st.table(res_df_gpt_new)
-                    st.write(res_df_gpt)
+                    
 
                     #data stored in  session state
                     st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, res_df_gpt], ignore_index=True)
                     st.session_state["tmp_narr_table_gpt"] = pd.concat([st.session_state.tmp_narr_table_gpt, res_df_gpt], ignore_index=True)
-                    res_df_gpt = pd.DataFrame(columns=['Question','Answer'])
+                    
                 
                 
                 elif st.session_state.llm == "Open-Source":
+                    res_df_llama = pd.DataFrame()
+                    res_df_llama_new = pd.DataFrame()
     
                     chat_history = {}
     
@@ -953,12 +958,12 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     except IndexError: 
                         pass
 
-                    st.table(res_df_llama)
-                    st.write(res_df_llama)
+                    #st.table(res_df_llama_new)
+                    st.table(res_df_llama_new)
           
                     st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
                     st.session_state["tmp_narr_table_llama"] = pd.concat([st.session_state.tmp_narr_table_llama, res_df_llama], ignore_index=True)
-                    res_df_llama = pd.DataFrame(columns=['Question','Answer'])
+                    
                 
       
     st.markdown("---")
@@ -983,6 +988,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
         response = llm_chain.run({"query":query, "context":context})
         return response
     if st.session_state.llm == "Open-AI":
+        df = pd.DataFrame()
         with st.spinner('Getting you information...'):      
             if query:
                 # Text input handling logic
@@ -1087,11 +1093,12 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
                 st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, df], ignore_index=True)
                 st.session_state.tmp_table_gpt.drop_duplicates(subset=['Question'])
-                df = pd.DataFrame(columns=['Question','Answer'])
+              
               
     
     
     elif st.session_state.llm == "Open-Source":
+        df = pd.DataFrame()
         with st.spinner('Getting you information...'):      
             if query:
                 # Text input handling logic
