@@ -1054,7 +1054,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                 if response:
                     df = pd.DataFrame(text_dict.items(), columns=['Question','Answer'])
                 else:
-                    df = pd.DataFrame()
+                    df = pd.DataFrame(columns=['Question','Answer'])
     
                 st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, df], ignore_index=True)
                 st.session_state.tmp_table_gpt.drop_duplicates(subset=['Question'])
@@ -1185,7 +1185,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                 if response:
                     df = pd.DataFrame(text_dict.items(), columns=['Question','Answer'])
                 else:
-                    df = pd.DataFrame()
+                    df = pd.DataFrame(columns=['Question','Answer'])
     
                 st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, df], ignore_index=True)
                 st.session_state.tmp_table_llama.drop_duplicates(subset=['Question'])
@@ -1989,7 +1989,7 @@ elif selected_option_case_type == "AML":
                 if response:
                     df = pd.DataFrame(text_dict.items(), columns=['Question','Answer'])
                 else:
-                    df = pd.DataFrame()
+                    df = pd.DataFrame(columns=['Question','Answer'])
     
                 st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, df], ignore_index=True)
                 st.session_state.tmp_table_gpt.drop_duplicates(subset=['Question'])
@@ -2019,7 +2019,7 @@ elif selected_option_case_type == "AML":
                 if response:
                     df = pd.DataFrame(text_dict.items(), columns=['Question','Answer'])
                 else:
-                    df = pd.DataFrame()
+                    df = pd.DataFrame(columns=['Question','Answer'])
     
                 st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, df], ignore_index=True)
                 st.session_state.tmp_table_llama.drop_duplicates(subset=['Question'])
