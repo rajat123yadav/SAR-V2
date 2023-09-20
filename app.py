@@ -460,8 +460,6 @@ if selected_option_case_type == "Select Case Type":
     st.header("")
 elif selected_option_case_type == "Fraud transaction dispute":
     st.markdown("### :blue[Fraud transaction dispute]")
-    # st.session_state.tmp_table_gpt=pd.DataFrame()
-    # st.session_state.tmp_table_llama=pd.DataFrame()
 
     # Redirect to Merge PDFs page when "Merge PDFs" is selected
     if selected_option == "SAR-2023-24680":
@@ -544,7 +542,34 @@ elif selected_option_case_type == "Fraud transaction dispute":
                 st.button('Fetch Evidence', on_click=set_clicked)
     
                 if st.session_state.clicked:
-       
+                    # st.write("Evidence Files:") 
+                    # st.markdown(html_str, unsafe_allow_html=True)
+                    
+                    # Showing files
+                    # show_files = fetched_files.copy()
+                    # show_files = show_files + ['Other.pdf']
+                    # files_frame = pd.DataFrame(show_files, columns=["File Name"])
+                    # # files_frame["Select"] = [True for _ in range(len(files_frame))]
+                    # files_frame = files_frame.reset_index(drop=True)
+    
+                    # # Add checkboxes to the DataFrame
+                    # df_with_checkboxes = add_checkboxes_to_dataframe(files_frame)
+                   
+                    # # Iterate through each row and add checkboxes
+                    # for index, row in df_with_checkboxes.iterrows():
+                    #     if index < len(df_with_checkboxes) - 1:
+                    #         checkbox_state = st.checkbox(f" {row['File Name']}", value=True)
+                    #         df_with_checkboxes.loc[index, 'Select'] = checkbox_state
+                    #     else:
+                    #         st.checkbox(f"{row['File Name']}", value=False)
+    
+    
+    
+                    # st.dataframe(files_frame)
+                    # st.write(df_reset.to_html(index=False), unsafe_allow_html=True)
+                    # st.markdown(files_frame.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                    
+                    
                     
                     #select box to select file
                     selected_file_name = st.selectbox(":blue[Select a file to View]",fetched_files)
@@ -786,7 +811,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     # st.write(res_df_gpt)
 
                     #data stored in  session state
-                    st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, res_df_gpt_new], ignore_index=True)
+                    st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, res_df_gpt], ignore_index=True)
                     st.session_state["tmp_narr_table_gpt"] = pd.concat([st.session_state.tmp_narr_table_gpt, res_df_gpt], ignore_index=True)
                 
                 
@@ -925,10 +950,10 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     except IndexError: 
                         pass
 
-                    st.table(res_df_llama_new)
+                    st.table(res_df_llama)
                     # st.write(res_df_llama)
           
-                    st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama_new], ignore_index=True)
+                    st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
                     st.session_state["tmp_narr_table_llama"] = pd.concat([st.session_state.tmp_narr_table_llama, res_df_llama], ignore_index=True)
                 
       
@@ -1054,7 +1079,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                 if response:
                     df = pd.DataFrame(text_dict.items(), columns=['Question','Answer'])
                 else:
-                    df = pd.DataFrame(columns=['Question','Answer'])
+                    df = pd.DataFrame()
     
                 st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, df], ignore_index=True)
                 st.session_state.tmp_table_gpt.drop_duplicates(subset=['Question'])
@@ -1190,7 +1215,51 @@ elif selected_option_case_type == "Fraud transaction dispute":
                 st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, df], ignore_index=True)
                 st.session_state.tmp_table_llama.drop_duplicates(subset=['Question'])
     
+    # col_s1, col_s2 = st.tabs(["Download Report", "Download Case Package"])
     
+    # if st.session_state.llm == "Open-AI":
+    #     st.session_state.disabled=False
+    #     with st.spinner('Summarization ...'):
+    #         if st.button("Summarize",disabled=st.session_state.disabled):
+    #             summ_dict_gpt = st.session_state.tmp_table_gpt.set_index('Question')['Answer'].to_dict()
+    #             # chat_history = resp_dict_obj['Summary']
+    #             memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=300)
+    #             memory.save_context({"input": "This is the entire summary"}, 
+    #                             {"output": f"{summ_dict_gpt}"})
+    #             conversation = ConversationChain(
+    #             llm=llm, 
+    #             memory = memory,
+    #             verbose=True)
+    #             st.session_state["tmp_summary_gpt"] = conversation.predict(input="Provide a detailed summary of the text provided by reframing the sentences. Provide the summary in a single paragraph. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
+    #             # showing the text in a textbox
+    #             # usr_review = st.text_area("", value=st.session_state["tmp_summary_gpt"])
+    #             # if st.button("Update Summary"):
+    #             #     st.session_state["fin_opt"] = usr_review
+    #             st.write(st.session_state["tmp_summary_gpt"])
+    
+    # elif st.session_state.llm == "Open-Source":
+    #     st.session_state.disabled=False
+    #     with st.spinner('Summarization ...'):
+    #         if st.button("Summarize",disabled=st.session_state.disabled):
+    
+    #             template = """Write a detailed summary.
+    #             Return your response in a single paragraph.
+    #             ```{text}```
+    #             Response: """
+    #             prompt = PromptTemplate(template=template,input_variables=["text"])
+    #             llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
+    
+    #             summ_dict_llama = st.session_state.tmp_table_llama.set_index('Question')['Answer']
+    #             text = []
+    #             for key,value in summ_dict_llama.items():
+    #                 text.append(value)
+    #             st.session_state["tmp_summary_llama"] = llm_chain_llama.run(text)
+    #             st.write(st.session_state["tmp_summary_llama"])
+            
+    
+    # with st.spinner("Downloading...."):
+    # if st.button("Download Response", disabled=st.session_state.disabled):
+    # Create a Word document with the table and some text
     
     # col_d1, col_d2 = st.columns(2)
     col_s1, col_s2, col_d1, col_d2 = st.tabs(["Summarize","SAR Narrative","Download Report", "Download Case Package"])
@@ -1220,7 +1289,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
                 elif st.session_state.llm == "Open-Source":
                     st.session_state.disabled=False
-                    template = """Write a detailed summary given the questions and answers below.
+                    template = """Write a detailed summary.
                     Return your response in a single paragraph.
                     ```{text}```
                     Response: """
@@ -1375,7 +1444,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
                 elif st.session_state.llm == "Open-Source":
                     st.session_state.disabled=False
-                    template = """You need to create a SAR Narrative which should include the answers to all the questions mentioned below in () by analysing the context provided below:\
+                    template = """You need to create a SAR Narrative which should include the answers to all the questions mentioned below in ():\
                                                                                           (1.What is the suspect's name ? \
                                                                                           2. When did the fraud occur? \
                                                                                           3.What type of fraud is taking place? \
@@ -1538,8 +1607,6 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
 elif selected_option_case_type == "AML":
     st.markdown("### :red[Anti-Money Laundering]")
-    # st.session_state.tmp_table_gpt=pd.DataFrame()
-    # st.session_state.tmp_table_llama=pd.DataFrame()
     if selected_option == "SAR-2023-24680":
         st.session_state.case_num = "SAR-2023-24680"
         
@@ -1927,9 +1994,7 @@ elif selected_option_case_type == "AML":
                     response = llama_llm(llama_13b,prompt_1)
                     chat_history[query] = response
                 
-
-
-                  
+                   
 
                     try:
                         res_df_llama = pd.DataFrame(list(chat_history.items()), columns=['Question','Answer'])
@@ -1991,7 +2056,7 @@ elif selected_option_case_type == "AML":
                 if response:
                     df = pd.DataFrame(text_dict.items(), columns=['Question','Answer'])
                 else:
-                    df = pd.DataFrame(columns=['Question','Answer'])
+                    df = pd.DataFrame()
     
                 st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, df], ignore_index=True)
                 st.session_state.tmp_table_gpt.drop_duplicates(subset=['Question'])
