@@ -1185,7 +1185,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                 if response:
                     df = pd.DataFrame(text_dict.items(), columns=['Question','Answer'])
                 else:
-                    df = pd.DataFrame(columns=['Question','Answer'])
+                    df = pd.DataFrame()
     
                 st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, df], ignore_index=True)
                 st.session_state.tmp_table_llama.drop_duplicates(subset=['Question'])
@@ -1927,7 +1927,9 @@ elif selected_option_case_type == "AML":
                     response = llama_llm(llama_13b,prompt_1)
                     chat_history[query] = response
                 
-                   
+
+
+                  
 
                     try:
                         res_df_llama = pd.DataFrame(list(chat_history.items()), columns=['Question','Answer'])
@@ -2019,7 +2021,7 @@ elif selected_option_case_type == "AML":
                 if response:
                     df = pd.DataFrame(text_dict.items(), columns=['Question','Answer'])
                 else:
-                    df = pd.DataFrame(columns=['Question','Answer'])
+                    df = pd.DataFrame()
     
                 st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, df], ignore_index=True)
                 st.session_state.tmp_table_llama.drop_duplicates(subset=['Question'])
