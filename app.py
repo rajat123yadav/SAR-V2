@@ -1233,7 +1233,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
             
                     summ_dict_gpt = st.session_state.tmp_table_gpt.set_index('Question')['Answer'].to_dict()
                     # chat_history = resp_dict_obj['Summary']
-                    memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=)
+                    memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=500)
                     memory.save_context({"input": "This is the entire summary"}, 
                                     {"output": f"{summ_dict_gpt}"})
                     conversation = ConversationChain(
