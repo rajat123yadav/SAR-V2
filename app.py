@@ -1251,11 +1251,12 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     Return your response in a single paragraph.
                     ```{text}```
                     Response: """
+                    summ_dict_llama = st.session_state.tmp_table_llama.set_index('Question')['Answer']
                     text = []
                     for key,value in summ_dict_llama.items():
                         text.append(value)
                     prompt = PromptTemplate(template=template,input_variables=["text"])
-                    summ_dict_llama = st.session_state.tmp_table_llama.set_index('Question')['Answer']
+                    
                     memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=500)
                     memory.save_context({"input": "This is the entire summary"}, 
                                     {"output": f"{summ_dict_llama}"})
