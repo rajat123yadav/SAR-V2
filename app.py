@@ -460,8 +460,8 @@ if selected_option_case_type == "Select Case Type":
     st.header("")
 elif selected_option_case_type == "Fraud transaction dispute":
     st.markdown("### :blue[Fraud transaction dispute]")
-    st.session_state.tmp_table_gpt=pd.DataFrame()
-    st.session_state.tmp_table_llama=pd.DataFrame()
+    # st.session_state.tmp_table_gpt=pd.DataFrame()
+    # st.session_state.tmp_table_llama=pd.DataFrame()
 
     # Redirect to Merge PDFs page when "Merge PDFs" is selected
     if selected_option == "SAR-2023-24680":
@@ -1538,8 +1538,8 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
 elif selected_option_case_type == "AML":
     st.markdown("### :red[Anti-Money Laundering]")
-    st.session_state.tmp_table_gpt=pd.DataFrame()
-    st.session_state.tmp_table_llama=pd.DataFrame()
+    # st.session_state.tmp_table_gpt=pd.DataFrame()
+    # st.session_state.tmp_table_llama=pd.DataFrame()
     if selected_option == "SAR-2023-24680":
         st.session_state.case_num = "SAR-2023-24680"
         
