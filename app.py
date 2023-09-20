@@ -1263,7 +1263,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b, memory=memory)
                     
             
-                    st.session_state["tmp_summary_llama"] = llm_chain_llama.run(text)
+                    st.session_state["tmp_summary_llama"] = llm_chain_llama(text)
                     st.write(st.session_state["tmp_summary_llama"])
     
         
