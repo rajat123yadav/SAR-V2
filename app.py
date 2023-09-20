@@ -1257,7 +1257,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                         text.append(value)
                     prompt = PromptTemplate(template=template,input_variables=["text"])
                     
-                    memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=500)
+                    memory = ConversationSummaryBufferMemory(llm=llama_13b, max_token_limit=500)
                     memory.save_context({"input": "This is the entire summary"}, 
                                     {"output": f"{summ_dict_llama}"})
                     llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b, memory=memory)
