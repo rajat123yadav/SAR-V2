@@ -291,7 +291,10 @@ if "visibility" not in st.session_state:
     st.session_state.disabled = True
 if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
-
+if "tmp_table_gpt" not in st.session_state:
+    st.session_state.tmp_table_gpt=pd.DataFrame()
+if "tmp_table_llama" not in st.session_state:
+    st.session_state.tmp_table_llama=pd.DataFrame()
 
 if "tmp_narr_table_gpt" not in st.session_state:
     st.session_state.tmp_narr_table_gpt=pd.DataFrame()
