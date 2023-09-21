@@ -291,20 +291,28 @@ if "visibility" not in st.session_state:
     st.session_state.disabled = True
 if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
-if "tmp_table_gpt" not in st.session_state:
-    st.session_state.tmp_table_gpt=pd.DataFrame()
-if "tmp_table_llama" not in st.session_state:
-    st.session_state.tmp_table_llama=pd.DataFrame()
+if "tmp_table_gpt_fd" not in st.session_state:
+    st.session_state.tmp_table_gpt_fd=pd.DataFrame()
+if "tmp_table_llama_fd" not in st.session_state:
+    st.session_state.tmp_table_llama_fd=pd.DataFrame()
+if "tmp_table_gpt_aml" not in st.session_state:
+    st.session_state.tmp_table_gpt_aml=pd.DataFrame()
+if "tmp_table_llama_aml" not in st.session_state:
+    st.session_state.tmp_table_llama_aml=pd.DataFrame()
 
 if "tmp_narr_table_gpt" not in st.session_state:
     st.session_state.tmp_narr_table_gpt=pd.DataFrame()
 if "tmp_narr_table_llama" not in st.session_state:
     st.session_state.tmp_narr_table_llama=pd.DataFrame()
   
-if "tmp_summary_gpt" not in st.session_state:
-    st.session_state["tmp_summary_gpt"] = ''
-if "tmp_summary_llama" not in st.session_state:
-    st.session_state["tmp_summary_llama"] = ''
+if "tmp_summary_gpt_fd" not in st.session_state:
+    st.session_state["tmp_summary_gpt_fd"] = ''
+if "tmp_summary_llama_fd" not in st.session_state:
+    st.session_state["tmp_summary_llama_fd"] = ''
+if "tmp_summary_gpt_aml" not in st.session_state:
+    st.session_state["tmp_summary_gpt_aml"] = ''
+if "tmp_summary_llama_aml" not in st.session_state:
+    st.session_state["tmp_summary_llama_aml"] = ''
 
 if "tmp_narrative_gpt" not in st.session_state:
     st.session_state["tmp_narrative_gpt"] = ''
@@ -459,12 +467,7 @@ with st.sidebar:
 if selected_option_case_type == "Select Case Type":
     st.header("")
 elif selected_option_case_type == "Fraud transaction dispute":    
-    del st.session_state.tmp_table_gpt
-    del st.session_state.tmp_table_llama
-    if "tmp_table_gpt" not in st.session_state:
-        st.session_state.tmp_table_gpt=pd.DataFrame()
-    if "tmp_table_llama" not in st.session_state:
-        st.session_state.tmp_table_llama=pd.DataFrame()
+    
     st.markdown("### :blue[Fraud transaction dispute]")
 
     # Redirect to Merge PDFs page when "Merge PDFs" is selected
@@ -763,7 +766,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     # st.write(res_df_gpt)
 
                     #data stored in  session state
-                    st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, res_df_gpt], ignore_index=True)
+                    st.session_state["tmp_table_gpt_fd"] = pd.concat([st.session_state.tmp_table_gpt_fd, res_df_gpt], ignore_index=True)
                     st.session_state["tmp_narr_table_gpt"] = pd.concat([st.session_state.tmp_narr_table_gpt, res_df_gpt], ignore_index=True)
                 
                 
@@ -902,12 +905,10 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     except IndexError: 
                         pass
 
-                    st.table(res_df_llama)
+                    st.table(res_df_llama_new)
                     # st.write(res_df_llama)
           
-                    st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
-                    st.table(st.session_state["tmp_table_llama"])
-                    st.table(st.session_state.tmp_table_llama)
+                    st.session_state["tmp_table_llama_fd"] = pd.concat([st.session_state.tmp_table_llama_fd, res_df_llama], ignore_index=True)                
                     st.session_state["tmp_narr_table_llama"] = pd.concat([st.session_state.tmp_narr_table_llama, res_df_llama], ignore_index=True)
                 
       
@@ -1035,8 +1036,8 @@ elif selected_option_case_type == "Fraud transaction dispute":
                 else:
                     df = pd.DataFrame()
     
-                st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, df], ignore_index=True)
-                st.session_state.tmp_table_gpt.drop_duplicates(subset=['Question'])
+                st.session_state["tmp_table_gpt_fd"] = pd.concat([st.session_state.tmp_table_gpt_fd, df], ignore_index=True)
+                st.session_state.tmp_table_gpt_fd.drop_duplicates(subset=['Question'])
     
     
     elif st.session_state.llm == "Open-Source":
@@ -1166,50 +1167,10 @@ elif selected_option_case_type == "Fraud transaction dispute":
                 else:
                     df = pd.DataFrame()
     
-                st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, df], ignore_index=True)
-                st.session_state.tmp_table_llama.drop_duplicates(subset=['Question'])
+                st.session_state["tmp_table_llama_fd"] = pd.concat([st.session_state.tmp_table_llama_fd, df], ignore_index=True)
+                st.session_state.tmp_table_llama_fd.drop_duplicates(subset=['Question'])
     
-    # col_s1, col_s2 = st.tabs(["Download Report", "Download Case Package"])
-    
-    # if st.session_state.llm == "Open-AI":
-    #     st.session_state.disabled=False
-    #     with st.spinner('Summarization ...'):
-    #         if st.button("Summarize",disabled=st.session_state.disabled):
-    #             summ_dict_gpt = st.session_state.tmp_table_gpt.set_index('Question')['Answer'].to_dict()
-    #             # chat_history = resp_dict_obj['Summary']
-    #             memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=300)
-    #             memory.save_context({"input": "This is the entire summary"}, 
-    #                             {"output": f"{summ_dict_gpt}"})
-    #             conversation = ConversationChain(
-    #             llm=llm, 
-    #             memory = memory,
-    #             verbose=True)
-    #             st.session_state["tmp_summary_gpt"] = conversation.predict(input="Provide a detailed summary of the text provided by reframing the sentences. Provide the summary in a single paragraph. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
-    #             # showing the text in a textbox
-    #             # usr_review = st.text_area("", value=st.session_state["tmp_summary_gpt"])
-    #             # if st.button("Update Summary"):
-    #             #     st.session_state["fin_opt"] = usr_review
-    #             st.write(st.session_state["tmp_summary_gpt"])
-    
-    # elif st.session_state.llm == "Open-Source":
-    #     st.session_state.disabled=False
-    #     with st.spinner('Summarization ...'):
-    #         if st.button("Summarize",disabled=st.session_state.disabled):
-    
-    #             template = """Write a detailed summary.
-    #             Return your response in a single paragraph.
-    #             ```{text}```
-    #             Response: """
-    #             prompt = PromptTemplate(template=template,input_variables=["text"])
-    #             llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
-    
-    #             summ_dict_llama = st.session_state.tmp_table_llama.set_index('Question')['Answer']
-    #             text = []
-    #             for key,value in summ_dict_llama.items():
-    #                 text.append(value)
-    #             st.session_state["tmp_summary_llama"] = llm_chain_llama.run(text)
-    #             st.write(st.session_state["tmp_summary_llama"])
-            
+   
     
     # with st.spinner("Downloading...."):
     # if st.button("Download Response", disabled=st.session_state.disabled):
@@ -1224,7 +1185,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                 if st.session_state.llm == "Open-AI":
                     st.session_state.disabled=False
             
-                    summ_dict_gpt = st.session_state.tmp_table_gpt.set_index('Question')['Answer'].to_dict()
+                    summ_dict_gpt = st.session_state.tmp_table_gpt_fd.set_index('Question')['Answer'].to_dict()
                     # chat_history = resp_dict_obj['Summary']
                     memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=300)
                     memory.save_context({"input": "This is the entire summary"}, 
@@ -1233,12 +1194,12 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     llm=llm, 
                     memory = memory,
                     verbose=True)
-                    st.session_state["tmp_summary_gpt"] = conversation.predict(input="Provide a detailed summary of the text provided by reframing the sentences. Provide the summary in a single paragraph. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
+                    st.session_state["tmp_summary_gpt_fd"] = conversation.predict(input="Provide a detailed summary of the text provided by reframing the sentences. Provide the summary in a single paragraph. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
                     # showing the text in a textbox
                     # usr_review = st.text_area("", value=st.session_state["tmp_summary_gpt"])
                     # if st.button("Update Summary"):
                     #     st.session_state["fin_opt"] = usr_review
-                    st.write(st.session_state["tmp_summary_gpt"])
+                    st.write(st.session_state["tmp_summary_gpt_fd"])
     
     
                 elif st.session_state.llm == "Open-Source":
@@ -1249,13 +1210,13 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     Response: """
                     prompt = PromptTemplate(template=template,input_variables=["text"])
                     llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
-                    st.table(st.session_state.tmp_table_llama)
-                    summ_dict_llama = st.session_state.tmp_table_llama.set_index('Question')['Answer']
+                    st.table(st.session_state.tmp_table_llama_fd)
+                    summ_dict_llama = st.session_state.tmp_table_llama_fd.set_index('Question')['Answer']
                     text = []
                     for key,value in summ_dict_llama.items():
                         text.append(value)
-                    st.session_state["tmp_summary_llama"] = llm_chain_llama.run(text)
-                    st.write(st.session_state["tmp_summary_llama"])
+                    st.session_state["tmp_summary_llama_fd"] = llm_chain_llama.run(text)
+                    st.write(st.session_state["tmp_summary_llama_fd"])
     
         
         tmp_summary = []
@@ -1263,14 +1224,14 @@ elif selected_option_case_type == "Fraud transaction dispute":
      
         if st.session_state.llm == "Open-AI":
             st.session_state.disabled=False
-            tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_gpt"]], ignore_index=True)
-            tmp_summary.append(st.session_state["tmp_summary_gpt"])
+            tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_gpt_fd"]], ignore_index=True)
+            tmp_summary.append(st.session_state["tmp_summary_gpt_fd"])
     
     
         elif st.session_state.llm == "Open-Source":
             st.session_state.disabled=False
-            tmp_summary.append(st.session_state["tmp_summary_llama"])
-            tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_llama"]], ignore_index=True)
+            tmp_summary.append(st.session_state["tmp_summary_llama_fd"])
+            tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_llama_fd"]], ignore_index=True)
     
     
         try:
@@ -1560,12 +1521,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
         }} </style> """, unsafe_allow_html=True)
     
 elif selected_option_case_type == "AML":
-    del st.session_state.tmp_table_gpt
-    del st.session_state.tmp_table_llama
-    if "tmp_table_gpt" not in st.session_state:
-        st.session_state.tmp_table_gpt=pd.DataFrame()
-    if "tmp_table_llama" not in st.session_state:
-        st.session_state.tmp_table_llama=pd.DataFrame()
+    
     st.markdown("### :red[Anti-Money Laundering]")
     if selected_option == "SAR-2023-24680":
         st.session_state.case_num = "SAR-2023-24680"
@@ -1880,7 +1836,7 @@ elif selected_option_case_type == "AML":
                     except IndexError: 
                         pass
                     st.table(res_df_gpt)
-                    st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, res_df_gpt], ignore_index=True)
+                    st.session_state["tmp_table_gpt_aml"] = pd.concat([st.session_state.tmp_table_gpt_aml, res_df_gpt], ignore_index=True)
                 
                 
                 elif st.session_state.llm == "Open-Source":
@@ -1966,7 +1922,7 @@ elif selected_option_case_type == "AML":
                     except IndexError: 
                         pass
                     st.table(res_df_llama)
-                    st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
+                    st.session_state["tmp_table_llama_aml"] = pd.concat([st.session_state.tmp_table_llama_aml, res_df_llama], ignore_index=True)
                 
                 
     
@@ -2019,8 +1975,8 @@ elif selected_option_case_type == "AML":
                 else:
                     df = pd.DataFrame()
     
-                st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, df], ignore_index=True)
-                st.session_state.tmp_table_gpt.drop_duplicates(subset=['Question'])
+                st.session_state["tmp_table_gpt_aml"] = pd.concat([st.session_state.tmp_table_gpt_aml, df], ignore_index=True)
+                st.session_state.tmp_table_gpt_aml.drop_duplicates(subset=['Question'])
     
     
     elif st.session_state.llm == "Open-Source":
@@ -2049,9 +2005,9 @@ elif selected_option_case_type == "AML":
                 else:
                     df = pd.DataFrame()
     
-                st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, df], ignore_index=True)
+                st.session_state["tmp_table_llama_aml"] = pd.concat([st.session_state.tmp_table_llama_aml, df], ignore_index=True)
                 
-                st.session_state.tmp_table_llama.drop_duplicates(subset=['Question'])
+                st.session_state.tmp_table_llama_aml.drop_duplicates(subset=['Question'])
     
     
     
@@ -2064,7 +2020,7 @@ elif selected_option_case_type == "AML":
                 if st.session_state.llm == "Open-AI":
                     st.session_state.disabled=False
             
-                    summ_dict_gpt = st.session_state.tmp_table_gpt.set_index('Question')['Answer'].to_dict()
+                    summ_dict_gpt = st.session_state.tmp_table_gpt_aml.set_index('Question')['Answer'].to_dict()
                     # chat_history = resp_dict_obj['Summary']
                     memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=300)
                     memory.save_context({"input": "This is the entire summary"}, 
@@ -2073,16 +2029,16 @@ elif selected_option_case_type == "AML":
                     llm=llm, 
                     memory = memory,
                     verbose=True)
-                    st.session_state["tmp_summary_gpt"] = conversation.predict(input="Provide a detailed summary of the text provided by reframing the sentences. Provide the summary in a single paragraph. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
+                    st.session_state["tmp_summary_gpt_aml"] = conversation.predict(input="Provide a detailed summary of the text provided by reframing the sentences. Provide the summary in a single paragraph. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
                     # showing the text in a textbox
                     # usr_review = st.text_area("", value=st.session_state["tmp_summary_gpt"])
                     # if st.button("Update Summary"):
                     #     st.session_state["fin_opt"] = usr_review
-                    st.write(st.session_state["tmp_summary_gpt"])
+                    st.write(st.session_state["tmp_summary_gpt_aml"])
     
     
                 elif st.session_state.llm == "Open-Source":
-                    st.write(st.session_state["tmp_table_llama"])
+                    st.write(st.session_state["tmp_table_llama_aml"])
                     st.session_state.disabled=False
                     template = """Write a detailed summary.
                     Return your response in a single paragraph.
@@ -2090,13 +2046,13 @@ elif selected_option_case_type == "AML":
                     Response: """
                     prompt = PromptTemplate(template=template,input_variables=["text"])
                     llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
-                    st.table(st.session_state.tmp_table_llama)
-                    summ_dict_llama = st.session_state.tmp_table_llama.set_index('Question')['Answer']
+                    st.table(st.session_state.tmp_table_llama_aml)
+                    summ_dict_llama = st.session_state.tmp_table_llama_aml.set_index('Question')['Answer']
                     text = []
                     for key,value in summ_dict_llama.items():
                         text.append(value)
-                    st.session_state["tmp_summary_llama"] = llm_chain_llama.run(text)
-                    st.write(st.session_state["tmp_summary_llama"])
+                    st.session_state["tmp_summary_llama_aml"] = llm_chain_llama.run(text)
+                    st.write(st.session_state["tmp_summary_llama_aml"])
     
         
         tmp_summary = []
@@ -2104,14 +2060,14 @@ elif selected_option_case_type == "AML":
     
         if st.session_state.llm == "Open-AI":
             st.session_state.disabled=False
-            tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_gpt"]], ignore_index=True)
-            tmp_summary.append(st.session_state["tmp_summary_gpt"])
+            tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_gpt_aml"]], ignore_index=True)
+            tmp_summary.append(st.session_state["tmp_summary_gpt_aml"])
     
     
         elif st.session_state.llm == "Open-Source":
             st.session_state.disabled=False
-            tmp_summary.append(st.session_state["tmp_summary_llama"])
-            tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_llama"]], ignore_index=True)
+            tmp_summary.append(st.session_state["tmp_summary_llama_aml"])
+            tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_llama_aml"]], ignore_index=True)
     
     
         try:
