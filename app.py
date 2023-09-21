@@ -657,22 +657,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
             length_function = len,
             separators=["\n\n", "\n", " ", ""]
         )
-        #text_splitter = CharacterTextSplitter.from_tiktoken_encoder(chunk_size=100, chunk_overlap=0)
-        #texts = ''
         
-        # @st.cache_data
-        # def embedding_store(file):
-        #     # save file
-        #     pdf_reader = PdfReader(file)
-        #     text = ""
-        #     for page in pdf_reader.pages:
-        #         text += page.extract_text()
-        #     #st.write(text)
-        #     texts =  text_splitter.split_text(text)
-        #     docs = text_to_docs(texts)
-        #     #st.write(texts)
-        #     docsearch = FAISS.from_documents(docs, hf_embeddings)
-        #     return docs, docsearch
         
         
     
@@ -704,8 +689,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                                 )
         # Show the table if the checkbox is ticked
         if show_table:
-            # st.write(df_fixed)
-            # st.dataframe(df_fixed, width=1000)
+            
             df_fixed["S.No."] = df_fixed.index
             df_fixed = df_fixed.loc[:,['S.No.','Questions']]
             st.markdown(df_fixed.style.hide(axis="index").to_html(), unsafe_allow_html=True)
@@ -919,6 +903,8 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     # st.write(res_df_llama)
           
                     st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
+                    st.table(st.session_state["tmp_table_llama"])
+                    st.table(st.session_state.tmp_table_llama)
                     st.session_state["tmp_narr_table_llama"] = pd.concat([st.session_state.tmp_narr_table_llama, res_df_llama], ignore_index=True)
                 
       
