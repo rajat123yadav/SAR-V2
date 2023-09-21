@@ -456,6 +456,10 @@ with st.sidebar:
 if selected_option_case_type == "Select Case Type":
     st.header("")
 elif selected_option_case_type == "Fraud transaction dispute":
+    if 'tmp_table_gpt' in st.session_state:
+        del st.session_state.tmp_table_gpt
+    if 'tmp_table_llama' in st.session_state:
+        del st.session_state.tmp_table_llama
     if "tmp_table_gpt" not in st.session_state:
         st.session_state.tmp_table_gpt=pd.DataFrame()
     if "tmp_table_llama" not in st.session_state:
@@ -1607,6 +1611,10 @@ elif selected_option_case_type == "Fraud transaction dispute":
         }} </style> """, unsafe_allow_html=True)
     
 elif selected_option_case_type == "AML":
+    if 'tmp_table_gpt' in st.session_state:
+        del st.session_state.tmp_table_gpt
+    if 'tmp_table_llama' in st.session_state:
+        del st.session_state.tmp_table_llama
     if "tmp_table_gpt" not in st.session_state:
         st.session_state.tmp_table_gpt=pd.DataFrame()
     if "tmp_table_llama" not in st.session_state:
