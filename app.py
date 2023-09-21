@@ -291,10 +291,7 @@ if "visibility" not in st.session_state:
     st.session_state.disabled = True
 if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
-if "tmp_table_gpt" not in st.session_state:
-    st.session_state.tmp_table_gpt=pd.DataFrame()
-if "tmp_table_llama" not in st.session_state:
-    st.session_state.tmp_table_llama=pd.DataFrame()
+
 
 if "tmp_narr_table_gpt" not in st.session_state:
     st.session_state.tmp_narr_table_gpt=pd.DataFrame()
@@ -459,6 +456,10 @@ with st.sidebar:
 if selected_option_case_type == "Select Case Type":
     st.header("")
 elif selected_option_case_type == "Fraud transaction dispute":
+    if "tmp_table_gpt" not in st.session_state:
+    st.session_state.tmp_table_gpt=pd.DataFrame()
+    if "tmp_table_llama" not in st.session_state:
+        st.session_state.tmp_table_llama=pd.DataFrame()
     st.markdown("### :blue[Fraud transaction dispute]")
 
     # Redirect to Merge PDFs page when "Merge PDFs" is selected
@@ -1606,6 +1607,10 @@ elif selected_option_case_type == "Fraud transaction dispute":
         }} </style> """, unsafe_allow_html=True)
     
 elif selected_option_case_type == "AML":
+    if "tmp_table_gpt" not in st.session_state:
+    st.session_state.tmp_table_gpt=pd.DataFrame()
+    if "tmp_table_llama" not in st.session_state:
+        st.session_state.tmp_table_llama=pd.DataFrame()
     st.markdown("### :red[Anti-Money Laundering]")
     if selected_option == "SAR-2023-24680":
         st.session_state.case_num = "SAR-2023-24680"
