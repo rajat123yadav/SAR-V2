@@ -545,36 +545,8 @@ elif selected_option_case_type == "Fraud transaction dispute":
                 st.button('Fetch Evidence', on_click=set_clicked)
     
                 if st.session_state.clicked:
-                    # st.write("Evidence Files:") 
-                    # st.markdown(html_str, unsafe_allow_html=True)
                     
-                    # Showing files
-                    # show_files = fetched_files.copy()
-                    # show_files = show_files + ['Other.pdf']
-                    # files_frame = pd.DataFrame(show_files, columns=["File Name"])
-                    # # files_frame["Select"] = [True for _ in range(len(files_frame))]
-                    # files_frame = files_frame.reset_index(drop=True)
-    
-                    # # Add checkboxes to the DataFrame
-                    # df_with_checkboxes = add_checkboxes_to_dataframe(files_frame)
-                   
-                    # # Iterate through each row and add checkboxes
-                    # for index, row in df_with_checkboxes.iterrows():
-                    #     if index < len(df_with_checkboxes) - 1:
-                    #         checkbox_state = st.checkbox(f" {row['File Name']}", value=True)
-                    #         df_with_checkboxes.loc[index, 'Select'] = checkbox_state
-                    #     else:
-                    #         st.checkbox(f"{row['File Name']}", value=False)
-    
-    
-    
-                    # st.dataframe(files_frame)
-                    # st.write(df_reset.to_html(index=False), unsafe_allow_html=True)
-                    # st.markdown(files_frame.style.hide(axis="index").to_html(), unsafe_allow_html=True)
-                    
-                    
-                    
-                    #select box to select file
+                   #select box to select file
                     selected_file_name = st.selectbox(":blue[Select a file to View]",fetched_files)
                     st.write("Selected File: ", selected_file_name)
                     st.session_state.disabled = False
@@ -769,17 +741,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                         
                     response = usellm(prompts)
                     
-                    # memory.save_context({"input": f"{queries}"}, {"output": f"{response}"})
-                    # st.write(response)
-                    # st.write(memory.load_memory_variables({}))
-    
-    
-    
-                    # Convert the response in dictionary from tbl
-                    # prompt_conv = f" Convert the tabular data into a python dictionary\
-                    #     context: {response}\
-                    #     Response (give me the response in the form of a python dictionary with questions exactly as it is): "
-                    # resp_dict = usellm(prompt_conv)
+                   
                     # st.write(response)
                     resp_dict_obj = json.loads(response)
                   
