@@ -1298,7 +1298,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     Response: """
                     prompt = PromptTemplate(template=template,input_variables=["text"])
                     llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
-    
+                    st.table(st.session_state.tmp_table_llama)
                     summ_dict_llama = st.session_state.tmp_table_llama.set_index('Question')['Answer']
                     text = []
                     for key,value in summ_dict_llama.items():
@@ -1460,7 +1460,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     Response: """
                     prompt = PromptTemplate(template=template,input_variables=["text"])
                     llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
-    
+
                     narrative_dict_llama = st.session_state.tmp_narr_table_llama.set_index('Question')['Answer']
                     text = []
                     for key,value in narrative_dict_llama.items():
@@ -2011,6 +2011,7 @@ elif selected_option_case_type == "AML":
                         index_ = pd.Series([1,2,3,4,5])
                         res_df_llama = res_df_llama.set_index([index_])
                         # st.write(res_df_llama)
+                  
                     except IndexError: 
                         pass
                     st.table(res_df_llama)
@@ -2138,7 +2139,7 @@ elif selected_option_case_type == "AML":
                     Response: """
                     prompt = PromptTemplate(template=template,input_variables=["text"])
                     llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
-    
+                    st.table(st.session_state.tmp_table_llama)
                     summ_dict_llama = st.session_state.tmp_table_llama.set_index('Question')['Answer']
                     text = []
                     for key,value in summ_dict_llama.items():
