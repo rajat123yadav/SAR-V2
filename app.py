@@ -2038,7 +2038,7 @@ elif selected_option_case_type == "AML":
     
     
                 elif st.session_state.llm == "Open-Source":
-                    st.write(st.session_state["tmp_table_llama_aml"])
+                    
                     st.session_state.disabled=False
                     template = """Write a detailed summary.
                     Return your response in a single paragraph.
@@ -2046,7 +2046,7 @@ elif selected_option_case_type == "AML":
                     Response: """
                     prompt = PromptTemplate(template=template,input_variables=["text"])
                     llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
-                    st.table(st.session_state.tmp_table_llama_aml)
+                    
                     summ_dict_llama = st.session_state.tmp_table_llama_aml.set_index('Question')['Answer']
                     text = []
                     for key,value in summ_dict_llama.items():
