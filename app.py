@@ -1797,14 +1797,14 @@ elif selected_option_case_type == "AML":
 
                     query = "When is the Money laundering activity taking place?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify all the transactions \
-                                that can be potentially associated with the Money Laundering activity both from Credit Card transaction statement as well as savings account statement collectively. \n
+                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify all the dates on which transactions \
+                                that can be potentially associated with the Money Laundering activity both from Credit Card transaction statement as well as savings account statement collectively is happening. \n
                                 Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000 \
                                 Payments greater than or equal to 10000$ to an unrecognized entity with no specific  business purpose, \ 
                                 , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.), any suspicion of money laundered via structuring , layering or intergration, process, \
                                 Cash deposits with source of funds not clear used to pay off debt, etc. \n
                                 Do not consider transactions less than 10000$ for creating the response. \n
-                                Give the dates and amounts only of all such suspicious transactions grouped by transaction type(Credit card, savings account,etc.) from the context as your response \
+                                Give the dates only of all such suspicious transactions grouped by transaction type(Credit card, savings account,etc.) from the context as your response \
                                 Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$ in your response.\n\n
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
