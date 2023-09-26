@@ -11,7 +11,7 @@ from langchain.vectorstores import FAISS
 import openai 
 import fitz
 import docx
-from gtts import gTTSf
+from gtts import gTTS
 import PyPDF2
 from PyPDF2 import PdfReader
 from utils import text_to_docs
