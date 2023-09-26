@@ -1787,7 +1787,7 @@ elif selected_option_case_type == "AML":
                                 , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.), any suspicion of money laundered via structuring , layering or intergration, process, \
                                 Cash deposits with source of funds not clear used to pay off debt, etc. \n
                                 Give all such suspicious transactions along with dates and amounts from the context as your response \
-                                Do not repeat the above information and provide a to the point response.\n\n
+                                Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$ in  your response.\n\n
                 
                                 Context: {context_1}\n\
                                 Response: '''
