@@ -1784,13 +1784,13 @@ elif selected_option_case_type == "AML":
                                 that can be potentially associated with the Money Laundering activity from Credit Card transaction statement only. \n
                                 Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000 \
                                 Payments greater than or equal to 10000$ to an unrecognized entity with no specific  business purpose, \ 
-                                , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.), any suspicion of money laundered via structuring , layering or intergration, process, \
-                                Cash deposits with source of funds not clear used to pay off debt, etc. \n
+                                , transactions involving movement of funds to or from high-risk locations (Ex- Mauritious, Syria, Nigeria,etc.)and are greater than or equal to 10000$, any suspicion of money laundered via structuring , layering or intergration, process, \
+                                Cash deposits greater than or eaual to 10000$ with source of funds not clear used to pay off debt, etc. \n
                                 Do not consider transactions less than 10000$ for evaluation. \n
                                 Give all such suspicious transactions along with dates and amounts and description from the context as your response \
                                 Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$ in your response.\n\n
                                 Context: {context_1}\n\
-                                Response: (Do not include any unnecessary information or an end note in the response)'''
+                                Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
 
                     response = usellm(prompt_1)
                     chat_history_1[query] = response
