@@ -1786,8 +1786,8 @@ elif selected_option_case_type == "AML":
                                 Payments greater than or equal to 10000$ to an unrecognized entity with no specific  business purpose, \ 
                                 , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.) and are greater than 10000$, any suspicion of money laundered via structuring , layering or intergration, process, \
                                 Cash deposits greater than or equal to 10000$ with source of funds not clear used to pay off debt, etc. \n
-                                Do not consider transactions which are less than 10000$ for evaluation. \n
-                                Describe all such suspicious transactions grouped by transaction type(Credit card, savings account,etc.) along with dates, amounts and description from the context as your response \
+                                Only include transactions which are greater than or equal to 10,000 $ in your response. \n
+                                Describe all such suspicious transactions along with dates, amounts and description from the context as your response \
                                 Do not repeat the above information and provide a to the point response.\n\n
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
