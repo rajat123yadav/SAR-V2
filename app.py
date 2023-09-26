@@ -1785,7 +1785,7 @@ elif selected_option_case_type == "AML":
                                 Money laundering transactions often involve characteristics like large cash deposits, High value transactions greater than or equal to $10,000 \
                                 , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.), any suspicion of money laundered via structuring , layering or intergration, process, \
                                 Cash deposits with source of funds not clear used to pay off debt, etc. \n
-                                Give all such suspicious transactions grouped by transaction statement type(EX- Credit card, savings account,etc.) from the context as your response \
+                                Give all such suspicious transactions grouped by transaction statement type(EX- Credit card, savings account,etc.) along with dates and amounts from the context as your response \
                                 Do not include any other unnecessary information or the Balance amount.\n\n
                 
                                 Context: {context_1}\n\
