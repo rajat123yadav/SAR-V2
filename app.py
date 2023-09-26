@@ -713,7 +713,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     and based on the evidence, is this a suspicious activity(Summarize all the questions asked prior to this in a detailed manner),that's the answer of\
                     whether this is a suspicious activity\
                     "
-                    contexts = docsearch.similarity_search(queries, k=5) 
+                    contexts = docsearch.similarity_search(queries, k=20) 
                     prompts = f" Give a the answer to the below questions as truthfully and in as detailed in the form of sentences\
                     as possible as per given context only,\n\n\
                             What is the victim's name?\n\
@@ -737,7 +737,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     resp_dict_obj = json.loads(response)
                   
                     query = "Is it a SAR Case?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f'''You need to act as a Financial analyst to check if this is a SAR or not, given the context. You can use the chat_history to get the context.\n\ \
                             A SAR case is usually determined by the following factors: \
                             1. If there is a potential suspect name present. \
@@ -776,7 +776,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     chat_history = {}
     
                     query = "What is the victim's name?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 = f'''You are a professional fraud analyst. Perform Name Enitity Recognition to identify the victim's name as accurately as possible, given the context. The victim can also be referenced as the customer with whom the Fraud has taken place.
                     victim's name is the Name provided in Cardholder Information.\n\n\
                             Question: {query}\n\
@@ -787,7 +787,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
     
                     query = "What is the suspect's name?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f'''You are a professional fraud analyst. You need to check the document and compare if any name discrepencies are present that points towards the suspect who used the card without the consent of the cardholder.
                 Hence, Compare the names present in the context. 
                 Reply the name of the person who is basically the suspect.\n\n\
@@ -799,7 +799,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     
                     
                     query = "list the merchant name"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 = f'''Perform Name Enitity Recognition to identify Merchant as accurately as possible, given the context. A merchant is a type of business or organization that accepts payments from the customer account. Give a relevant and concise response.\n\n\
                                 Question: {query}\n\
                                 Context: {context_1}\n\
@@ -809,7 +809,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
     
                     query = "How was the bank notified?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f'''You need to act as a Financial analyst to identify how was the bank notified of the Supicious or Fraud event with in the given context. The means of communication can be a call, an email or in person. Give a concise response.\n\n\
                                 Question: {query}\n\
                                 Context: {context_1}\n\
@@ -819,7 +819,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
                     
                     query = "When was the bank notified?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f'''You need to act as a Financial analyst to identify when the bank was notified of the Fraud. Look for the disputed date. Given the context, provide a relevant and concise response.\n\n\
                                 Question: {query}\n\
                                 Context: {context_1}\n\
@@ -830,7 +830,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
     
                     query = "What is the Fraud Type?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f''' You need to act as a Financial analyst to identify the type of fraud or suspicious activity has taken place amd summarize it, within the given context. Also mention the exact fraud code. Give a relevant and concise response.\n\n\
                                 Question: {query}\n\
                                 Context: {context_1}\n\
@@ -842,7 +842,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
     
                     query = "When did the fraud occur?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f''' You need to act as a Financial analyst to identify the when the did the fraud occur i.e., the Transaction Date. Given the context, provide a relevant and concise response.\n\n\
                                 Question: {query}\n\
                                 Context: {context_1}\n\
@@ -852,7 +852,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
     
                     query = "Was the disputed amount greater than 5000 usd?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f''' You need to act as a Financial analyst to identify the disputed amount and perform a mathematical calculation to check if the disputed amount is greater than 5000 USD or not, given the context. Give a relevant and concise response.\n\n\
                                 Question: {query}\n\
                                 Context: {context_1}\n\
@@ -862,7 +862,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
     
                     query = "What type of cards are involved?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f''' You need to act as a Financial analyst to identify the type of card and card network involved, given the context. On a higher level the card can be a Credit Visa, Debit Visa Card.Based on the context give a relevant and concise response.\n\n\
                                 Question: {query}\n\
                                 Context: {context_1}\n\
@@ -872,7 +872,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
     
     
                     query = "was the police report filed?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f''' You need to act as a Financial analyst to identify if the police was reported of the Fraud activity, given the context. Give a relevant and concise response.\n\n\
                                 Question: {query}\n\
                                 Context: {context_1}\n\
@@ -881,7 +881,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                     chat_history[query] = response
 
                     query = "Is it a SAR Case?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f'''You need to act as a Financial analyst to check if this is a SAR or not, given the context. You can use the chat_history to get the context.\n\ \
                             A SAR case is usually determined by the following factors: \
                             1. If there is a potential suspect name present. \
@@ -941,7 +941,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                 #st.write("Text Input:")
                 #st.write(text_input)
     
-                context_1 = docsearch.similarity_search(query, k=5)
+                context_1 = docsearch.similarity_search(query, k=20)
                 st.session_state.context_1 = context_1
                 if query.lower() == "what is the victim's name?":
                     prompt_1 = f'''Perform Name Enitity Recognition to identify the Customer name as accurately as possible, given the context. The Customer can also be referenced as the Victim or the person with whom the Fraud has taken place.\n\n\
@@ -1048,7 +1048,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
                 #st.write("Text Input:")
                 #st.write(text_input)
     
-                context_1 = docsearch.similarity_search(query, k=5)
+                context_1 = docsearch.similarity_search(query, k=20)
                 st.session_state.context_1 = context_1
                 if query.lower() == "what is the victim's name?":
                     prompt_1 = f'''Perform Name Enitity Recognition to identify the Customer name as accurately as possible, given the context. The Customer can also be referenced as the Victim or the person with whom the Fraud has taken place.
@@ -1762,7 +1762,7 @@ elif selected_option_case_type == "AML":
                     chat_history_1 = {}
     
                     query = "Is there any potential Money Laundering activity based on the transaction statements?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering. \n
                     You need to look closely into the credit card transaction statements as well as savings account transaction statements collectively and evaluate \
                     them together to check for any potential suspicious money laundering activities. \n
@@ -1780,7 +1780,7 @@ elif selected_option_case_type == "AML":
     
     
                     query = "What are the transaction that can be associated with Money Laundering activity?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
                                 that can be potentially associated with the Money Laundering activity both from Credit Card transaction statement as well as savings account statement collectively. \n
                                 Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000 \
@@ -1797,7 +1797,7 @@ elif selected_option_case_type == "AML":
                     chat_history_1[query] = response
 
                     query = "When is the Money laundering activity taking place?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify all the dates on which transactions \
                                 that can be potentially associated with the Money Laundering activity both from Credit Card transaction statement as well as savings account statement collectively is happening. \n
                                 Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000 \
@@ -1814,7 +1814,7 @@ elif selected_option_case_type == "AML":
                     chat_history_1[query] = response
 
                     query = "What type of Money laundering activity is taking place?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the \
                                 type of money laundering activity that is taking place based on the transaction \
                                 patterns observed in credit card and savings account transaction statements. The type may include Layering, Structuring, Round-tripping etc. \
@@ -1826,7 +1826,7 @@ elif selected_option_case_type == "AML":
                     chat_history_1[query] = response
 
                     query = "What is the total amount associated with the money laundering activity?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
                                 that can be potentially associated with the Money Laundering activity both from Credit Card transaction statement as well as savings account statements collectively. \n
                                 Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000, \
@@ -1861,7 +1861,7 @@ elif selected_option_case_type == "AML":
                     chat_history = {}
     
                     query = "Is there any potential Money Laundering activity based on the transaction statements?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering. 
                     A Money laundering activity can be detected if any of the following transaction patterns is observed-:
                     1) If there are multiple transactions happening, greater than or equal to $10,000 in a short span of time.
@@ -1878,7 +1878,7 @@ elif selected_option_case_type == "AML":
                   
     
                     query = "What are the transaction that can be associated with Money Laundering activity?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
                                 that can be potentially associated with the Money Laundering activity. Money laundering \
                                 transactions often involve characteristics like large cash deposits, High value transactions greater than or equal to $10,000 \
@@ -1892,7 +1892,7 @@ elif selected_option_case_type == "AML":
                     chat_history[query] = response
 
                     query = "When is the Money laundering activity taking place?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give all the dates when a money laundering activity is taking place given the context. Money laundering transactions often \
                                 involve characteristics like large cash deposits equal and above $10,000 followed by a large amount transfer or Structuring, \
                                 rapid movement of funds, transactions with high-risk countries, or unexplained source of funds. Specifically, all transactions above or \ 
@@ -1904,7 +1904,7 @@ elif selected_option_case_type == "AML":
                     chat_history[query] = response
                   
                     query = "What type of Money laundering activity is taking place?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the \
                                 type of money laundering activity that is taking place based on the transaction \
                                 patterns observed. The type may include Layering, Structuring, Round-tripping etc. \
@@ -1916,7 +1916,7 @@ elif selected_option_case_type == "AML":
                     chat_history[query] = response
 
                     query = "What is the total amount associated with the money laundering activity?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    context_1 = docsearch.similarity_search(query, k=20)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the total amount \
                                 associated with money laundering activity that is taking place Based on the \
                                 transaction statement, for getting the total amount, you can add all the money laundering \
@@ -1972,7 +1972,7 @@ elif selected_option_case_type == "AML":
                 #st.write("Text Input:")
                 #st.write(text_input)
     
-                context_1 = docsearch.similarity_search(query, k=5)
+                context_1 = docsearch.similarity_search(query, k=20)
                 st.session_state.context_1 = context_1
                 
             
@@ -2003,7 +2003,7 @@ elif selected_option_case_type == "AML":
                 #st.write("Text Input:")
                 #st.write(text_input)
     
-                context_1 = docsearch.similarity_search(query, k=5)
+                context_1 = docsearch.similarity_search(query, k=20)
                 st.session_state.context_1 = context_1
                 prompt_1 = f''' You Are an Anti-Money Laundering Specialist, provide the answer to the below question in a concise manner.\n\n\
                             Question: {query}\n\
