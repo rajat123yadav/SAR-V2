@@ -1763,7 +1763,7 @@ elif selected_option_case_type == "AML":
                     query = "Is there any potential Money Laundering activity based on the transaction statements?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering. \n
-                    You need to look closely into the credit card transaction statements as well as savings account transaction statements and evaluate \
+                    You need to look closely into the credit card transaction statements as well as savings account transaction statements collectively and evaluate \
                     them together to check for any potential suspicious money laundering activities. \n
                     A Money laundering activity can be detected if any of the following transaction patterns is observed-:
                     1) If there are cash transactions happening, greater than or equal to $10,000.
@@ -1781,11 +1781,12 @@ elif selected_option_case_type == "AML":
                     query = "What are the transaction that can be associated with Money Laundering activity?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
-                                that can be potentially associated with the Money Laundering activity both from Credit Card as well as savings account transaction statements collectively. \n
-                                Money laundering transactions often involve characteristics like large cash deposits, High value transactions greater than or equal to $10,000 \
+                                that can be potentially associated with the Money Laundering activity both from Credit Card transaction statement only. \n
+                                Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000 \
+                                Payments greater than or equal to 10000$ to an unrecognized entity with no specific  business purpose, \ 
                                 , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.), any suspicion of money laundered via structuring , layering or intergration, process, \
                                 Cash deposits with source of funds not clear used to pay off debt, etc. \n
-                                Give all such suspicious transactions grouped by transaction statement type(EX- Credit card, savings account,etc.) along with dates and amounts from the context as your response \
+                                Give all such suspicious transactions along with dates and amounts from the context as your response \
                                 Do not repeat the above information and provide a to the point response.\n\n
                 
                                 Context: {context_1}\n\
@@ -1796,10 +1797,13 @@ elif selected_option_case_type == "AML":
 
                     query = "When is the Money laundering activity taking place?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give all the dates when a money laundering activity is taking place given the context. Money laundering transactions often \
-                                involve characteristics like large cash deposits equal and above $10,000 followed by a large amount transfer or Structuring, \
-                                rapid movement of funds, transactions with high-risk countries, or unexplained source of funds. Specifically, all transactions above or \ 
-                                equal to $10,000 are considered to be a potential money laundering transaction. Answer the question considering the factors mentioned above with transaction details.\n\n\
+                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
+                                that can be potentially associated with the Money Laundering activity  from Credit Card transaction statement as well as savings account statement collectively \n
+                                Money laundering transactions often involve characteristics like large cash deposits, High value transactions greater than or equal to $10,000 \
+                                , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.), any suspicion of money laundered via structuring , layering or intergration, process, \
+                                Cash deposits with source of funds not clear used to pay off debt, etc. \n
+                                Give all such suspicious transactions grouped by transaction statement type(EX- Credit card, savings account,etc.) along with dates and amounts from the context as your response \
+                                Do not repeat the above information and provide a to the point response.\n\n Answer the question considering the factors mentioned above with transaction details.\n\n\
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
 
