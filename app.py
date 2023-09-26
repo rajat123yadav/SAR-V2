@@ -1789,7 +1789,6 @@ elif selected_option_case_type == "AML":
                                 Do not consider transactions less than 10000$ for evaluation. \n
                                 Give all such suspicious transactions along with dates and amounts and description from the context as your response \
                                 Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$ in your response.\n\n
-                                Do not give me any Explanation,Note, etc. in your response. \n\n
                                 Context: {context_1}\n\
                                 Response: (Do not include any unnecessary information or an end note in the response)'''
 
@@ -1807,7 +1806,6 @@ elif selected_option_case_type == "AML":
                                 Do not consider transactions less than 10000$ for evaluation. \n
                                 Give the dates of all such suspicious transactions grouped by transaction type(Credit card, savings account,etc.) along with dates and amounts from the context as your response \
                                 Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$ in your response.\n\n
-                                Do not give me any Explanation,Note, etc. in your response. \n\n
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
 
