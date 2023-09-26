@@ -638,7 +638,7 @@ elif selected_option_case_type == "Fraud transaction dispute":
             else: pass
     
          #This is the embedding model
-        model_name = "sentence-transformers/all-MiniLM-L6-v2"
+        model_name = "thenlper/gte-small"
         # model_name = "hkunlp/instructor-large"
         
         # Memory setup for gpt-3.5
@@ -1687,7 +1687,7 @@ elif selected_option_case_type == "AML":
             else: pass
     
          #This is the embedding model
-        model_name= "sentence-transformers/all-MiniLM-L6-v2"
+        model_name= "thenlper/gte-small"
         
         
         # Memory setup for gpt-3.5
