@@ -1786,10 +1786,10 @@ elif selected_option_case_type == "AML":
                                 , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.), any suspicion of money laundered via structuring , layering or intergration, process, \
                                 Cash deposits with source of funds not clear used to pay off debt, etc. \n
                                 Give all such suspicious transactions grouped by transaction statement type(EX- Credit card, savings account,etc.) along with dates and amounts from the context as your response \
-                                Do not include any other unnecessary information or the Balance amount.\n\n
+                                Do not repeat the above information and provide a to the point response.\n\n
                 
                                 Context: {context_1}\n\
-                                Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
+                                Response: '''
 
                     response = usellm(prompt_1)
                     chat_history_1[query] = response
