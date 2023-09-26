@@ -1781,10 +1781,10 @@ elif selected_option_case_type == "AML":
                     query = "What are the transaction that can be associated with Money Laundering activity?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
-                                that can be potentially associated with the Money Laundering activity. Money laundering \
+                                that can be potentially associated with the Money Laundering activity both from Credit Card as well as savings account transaction statements collectively. Money laundering \
                                 transactions often involve characteristics like large cash deposits, High value transactions greater than or equal to $10,000 \
                                 , transactions with high-risk countries(Ex- Mauritious, Syria, Nigeria,etc.), money laundered via structuring , layering or intergration, process, \
-                                Cash deposits with source of funds not clear used to pay off debt, etc. Give precise response, \
+                                Cash deposits with source of funds not clear used to pay off debt, etc. Give all such transactions grouped by transaction statement type(EX- Credit card, savings account,etc.)  \
                                 do not include any other unnecessary information or the Balance amount.\n\n
                 
                                 Context: {context_1}\n\
