@@ -1826,10 +1826,16 @@ elif selected_option_case_type == "AML":
 
                     query = "What is the total amount associated with the money laundering activity?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the total amount \
-                                associated with money laundering activity that is taking place Based on the \
-                                transaction statement, for getting the total amount, you can add all the money laundering \
-                                transactions amount.\n\n\
+                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
+                                that can be potentially associated with the Money Laundering activity both from Credit Card transaction statement as well as savings account statement collectively. \n
+                                Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000 \
+                                Payments greater than or equal to 10000$ to an unrecognized entity with no specific  business purpose, \ 
+                                , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.) and are greater than 10000$, any suspicion of money laundered via structuring , layering or intergration, process, \
+                                Cash deposits greater than or equal to 10000$ with source of funds not clear used to pay off credit card debt, etc\n \n
+                                Only include transactions which are greater than or equal to 10,000$ in your response. \n
+                                Add dollar amount of all the  such suspicious transactions grouped by transaction type(Credit card, savings account,etc.) \
+                                which will be the total amount associated with the money laundering.
+                                Only include the total amount grouped by transaction type(Credit card, savings account,etc.) in your response .\n\n\
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
                     
