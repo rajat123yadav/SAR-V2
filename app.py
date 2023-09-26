@@ -137,13 +137,13 @@ def embed(model_name):
 @st.cache_data
 def embedding_store(pdf_files):
     pdf_only =[]
+    text = ""
     for file in pdf_files:
       if file.endswith('.pdf'):
         pdf_only.append(file)       
       
     merged_pdf = merge_pdfs(pdf_only)
     final_pdf = PyPDF2.PdfReader(merged_pdf)
-    text = ""
     for page in final_pdf.pages:
         text += page.extract_text()
       
@@ -164,9 +164,9 @@ def embedding_store(pdf_files):
         # Extract the text content above the data
         text += "\n".join(df.iloc[:data_start_row].apply(lambda x: "\t".join(map(str, x)), axis=1)).replace('nan','')
         
-        df = df.iloc[data_start_row+1:]
+        df1 = df.iloc[data_start_row+1:]
         text_buffer = StringIO()
-        df.to_csv(text_buffer, sep='\t', index=False)
+        df1.to_csv(text_buffer, sep='\t', index=False)
         text += "\n\n"+ text_buffer.getvalue()
         text_buffer.close()
         
