@@ -1787,10 +1787,10 @@ elif selected_option_case_type == "AML":
                                 , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.), any suspicion of money laundered via structuring , layering or intergration, process, \
                                 Cash deposits with source of funds not clear used to pay off debt, etc. \n
                                 Give all such suspicious transactions along with dates and amounts and description from the context as your response \
-                                Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$ and donot include a note in your response.\n\n
+                                Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$\n\n
                 
                                 Context: {context_1}\n\
-                                Response: '''
+                                Response: (Do not include any unnecessary information or an end note in the response)'''
 
                     response = usellm(prompt_1)
                     chat_history_1[query] = response
@@ -1803,10 +1803,10 @@ elif selected_option_case_type == "AML":
                                 Payments greater than or equal to 10000$ to an unrecognized entity with no specific  business purpose, \ 
                                 , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.), any suspicion of money laundered via structuring , layering or intergration, process, \
                                 Cash deposits with source of funds not clear used to pay off debt, etc. \n
-                                Give all such suspicious transactions grouped by transaction type(Credit card, savings account,etc.) along with dates and amounts from the context as your response \
-                                Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$ and donot include a note in your response.\n\n
-                                                Context: {context_1}\n\
-                                Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
+                                Give the dates of all such suspicious transactions grouped by transaction type(Credit card, savings account,etc.) along with dates and amounts from the context as your response \
+                                Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$.\n\n
+                                Context: {context_1}\n\
+                                Response: (Give me a concise response .Do not give me any Explanation,Note)'''
 
                     response = usellm(prompt_1)
                     chat_history_1[query] = response
