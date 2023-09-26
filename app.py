@@ -83,6 +83,7 @@ def merge_pdfs(pdf_list):
     output_pdf = BytesIO()
     pdf_merger.write(output_pdf)
     pdf_merger.close()
+  
     return output_pdf
 
 
